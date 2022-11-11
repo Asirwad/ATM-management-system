@@ -16,7 +16,7 @@ public class Login extends JFrame implements ActionListener{
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setUndecorated(true);
         setLocationRelativeTo(null);
-        
+       
         //BACKGROUND IMAGE
         setContentPane(new JLabel(new ImageIcon(ClassLoader.getSystemResource("icons/loginBackground.png"))));
         
