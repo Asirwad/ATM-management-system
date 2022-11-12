@@ -6,7 +6,7 @@ import javax.swing.border.Border;
 import java.sql.*;
 
 public class Login extends JFrame implements ActionListener{
-    JButton ClrBut,loginBut,signUpBut;
+    JButton ClrBut,loginBut,signUpBut,adminLoginBut;
     JTextField cardTextField;
     JPasswordField pinTextField;
     JLabel closeLabel,signUpLabel;
