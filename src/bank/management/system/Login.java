@@ -6,10 +6,10 @@ import javax.swing.border.Border;
 import java.sql.*;
 
 public class Login extends JFrame implements ActionListener{
-    JButton ClrBut,loginBut,signUpBut,adminLoginBut;
+    JButton ClrBut,loginBut,signUpBut;
     JTextField cardTextField;
     JPasswordField pinTextField;
-    JLabel closeLabel,signUpLabel;
+    JLabel closeLabel,signUpLabel,adminLoginlabel;
     Login(){
         setTitle("AUTOMATED TELLER MACHINE");
         setLayout(null);
@@ -138,6 +138,27 @@ public class Login extends JFrame implements ActionListener{
             }
         });
         add(ClrBut);
+        
+        adminLoginlabel = new JLabel("Admin Login");
+        adminLoginlabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        adminLoginlabel.setBounds(600,450,100,30);
+        adminLoginlabel.setFont(new Font("Railway",Font.BOLD,13));
+        adminLoginlabel.setForeground(Color.WHITE);
+        adminLoginlabel.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent evt){
+                adminLoginEvent(evt);
+            }
+            @Override
+            public void mouseEntered(MouseEvent evt){
+                adminLoginlabel.setFont(new Font("Railway",Font.BOLD,15));
+            }
+            @Override
+            public void mouseExited(MouseEvent evt){
+                adminLoginlabel.setFont(new Font("Railway",Font.BOLD,13));
+            }
+        });
+        add(adminLoginlabel);
 
         setSize(800,480);
         setVisible(true);
@@ -178,6 +199,9 @@ public class Login extends JFrame implements ActionListener{
     public void signUpEvent(MouseEvent evt){//Sign up
         setVisible(false);
         new SignUpOne().setVisible(true);
+    }
+    public void adminLoginEvent(MouseEvent evt){
+        System.out.println("Hello");
     }
     public static void main(String[] args) {
         Login login = new Login();
