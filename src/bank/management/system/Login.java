@@ -35,7 +35,7 @@ public class Login extends JFrame implements ActionListener{
         
         signUpLabel = new JLabel("<html><u>Sign Up</u></html>");
         signUpLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        signUpLabel.setBounds(630,84,60,30);
+        signUpLabel.setBounds(633,85,60,30);
         signUpLabel.setFont(new Font("Railway",Font.BOLD,13));
         signUpLabel.setForeground(Color.WHITE);
         signUpLabel.addMouseListener(new MouseAdapter(){
@@ -77,7 +77,7 @@ public class Login extends JFrame implements ActionListener{
             }
             @Override
             public void mouseEntered(MouseEvent evt){
-                closeLabel.setForeground(Color.RED);
+                closeLabel.setForeground(Color.DARK_GRAY);
             }
             @Override
             public void mouseExited(MouseEvent evt){
@@ -141,8 +141,8 @@ public class Login extends JFrame implements ActionListener{
         
         adminLoginlabel = new JLabel("Admin Login");
         adminLoginlabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        adminLoginlabel.setBounds(600,450,100,30);
-        adminLoginlabel.setFont(new Font("Railway",Font.BOLD,13));
+        adminLoginlabel.setBounds(550,450,100,30);
+        adminLoginlabel.setFont(new Font("Railway",Font.PLAIN,13));
         adminLoginlabel.setForeground(Color.WHITE);
         adminLoginlabel.addMouseListener(new MouseAdapter(){
             @Override
@@ -151,11 +151,11 @@ public class Login extends JFrame implements ActionListener{
             }
             @Override
             public void mouseEntered(MouseEvent evt){
-                adminLoginlabel.setFont(new Font("Railway",Font.BOLD,15));
+                adminLoginlabel.setText("<html><u>Admin Login</u></html>");
             }
             @Override
             public void mouseExited(MouseEvent evt){
-                adminLoginlabel.setFont(new Font("Railway",Font.BOLD,13));
+                adminLoginlabel.setText("Admin Login");
             }
         });
         add(adminLoginlabel);
