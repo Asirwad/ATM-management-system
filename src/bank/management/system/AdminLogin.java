@@ -168,7 +168,7 @@ public class AdminLogin extends JFrame implements ActionListener{
                     JOptionPane.showMessageDialog(null,"Invalid Crediantals");
                 }
             }catch(Exception e){
-                //do nothing have,a kitkat
+                //do nothing ,have a kitkat
             }
         }
     }
