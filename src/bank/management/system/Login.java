@@ -13,7 +13,7 @@ public class Login extends JFrame implements ActionListener{
     Login(){
         setTitle("AUTOMATED TELLER MACHINE");
         setLayout(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setUndecorated(true);
         setLocationRelativeTo(null);
        
@@ -77,7 +77,7 @@ public class Login extends JFrame implements ActionListener{
             }
             @Override
             public void mouseEntered(MouseEvent evt){
-                closeLabel.setForeground(Color.DARK_GRAY);
+                closeLabel.setForeground(Color.LIGHT_GRAY);
             }
             @Override
             public void mouseExited(MouseEvent evt){
@@ -184,7 +184,7 @@ public class Login extends JFrame implements ActionListener{
                     JOptionPane.showMessageDialog(null,"Invalid credentials");
                 }
             }catch(Exception e){
-                
+                //do nothing have,a kitkat
             }
         }
         
@@ -201,7 +201,8 @@ public class Login extends JFrame implements ActionListener{
         new SignUpOne().setVisible(true);
     }
     public void adminLoginEvent(MouseEvent evt){
-        System.out.println("Hello");
+        setVisible(false);
+        new AdminLogin().setVisible(true);
     }
     public static void main(String[] args) {
         Login login = new Login();
