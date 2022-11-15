@@ -17,7 +17,7 @@ public class AdminLogin extends JFrame implements ActionListener{
         setLocationRelativeTo(null);
         
         //BACKGROUND IMAGE
-        setContentPane(new JLabel(new ImageIcon(ClassLoader.getSystemResource("icons/adminLoginBackground.png"))));
+        setContentPane(new JLabel(new ImageIcon(ClassLoader.getSystemResource("icons/adminLoginBlackBackground.gif"))));
     
         //CLOSE
         closeLabel = new JLabel("X");
