@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Random;
+import java.sql.SQLException;
 
 public class SignUpThree extends JFrame implements ActionListener{
     
@@ -190,11 +191,13 @@ public class SignUpThree extends JFrame implements ActionListener{
         cancel.addMouseListener(new MouseAdapter(){
             @Override
             public void mouseEntered(MouseEvent evt){
-                cancel.setBackground(Color.DARK_GRAY);
+                cancel.setBackground(Color.YELLOW);
+                cancel.setForeground(Color.BLACK);
             }
             @Override
             public void mouseExited(MouseEvent evt){
                 cancel.setBackground(new Color(123,150,212));
+                cancel.setForeground(Color.WHITE);
             }
             });
         add(cancel);
@@ -252,8 +255,19 @@ public class SignUpThree extends JFrame implements ActionListener{
             }
         }
         else if(ae.getSource()==cancel){
-            setVisible(false);
-            new Login().setVisible(true);
+            int choice = JOptionPane.YES_NO_OPTION;
+            choice = JOptionPane.showConfirmDialog(null,"Are you sure want to cancel?","Warning",choice);
+            if(choice == JOptionPane.YES_OPTION){
+                try{
+                    Conn conn = new Conn();
+                    conn.s.executeUpdate("delete from signup where formno = '"+formno+"';");
+                    conn.s.executeUpdate("delete from signuptwo where formno = '"+formno+"';");
+                    setVisible(false);
+                    new Login().setVisible(true);
+                }catch(SQLException ex){
+                    System.out.println(ex);
+                }
+            }
         }
     }
     public static void main(String args[]) {
