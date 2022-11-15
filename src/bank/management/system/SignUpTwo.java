@@ -3,10 +3,11 @@ package bank.management.system;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 
 public class SignUpTwo extends JFrame implements ActionListener{
     String formno;
-    JButton next;
+    JButton next,cancel;
     JTextField panText,aadharText;
     JRadioButton syes,sno,eyes,eno;
     JComboBox religionBox,categoryBox,incomeBox,qualificationBox,ocupationBox;
@@ -193,47 +194,84 @@ public class SignUpTwo extends JFrame implements ActionListener{
         }
         });
         add(next);
+        
+        cancel = new JButton("Cancel");
+        cancel.setFont(new Font("Railway",Font.BOLD,14));
+        cancel.setBounds(100,543,82,25);
+        cancel.setFocusable(false);
+        cancel.setBackground(new Color(123,150,212));
+        cancel.setForeground(Color.WHITE);
+        cancel.setBorderPainted(false);
+        cancel.addActionListener(this);
+        cancel.addMouseListener(new MouseAdapter(){
+        @Override
+        public void mouseEntered(MouseEvent evt){
+            cancel.setBackground(Color.YELLOW);
+            cancel.setForeground(Color.BLACK);
+        }
+        @Override
+        public void mouseExited(MouseEvent evt){
+            cancel.setBackground(new Color(123,150,212));
+            cancel.setForeground(Color.WHITE);
+        }
+        });
+        add(cancel);
 
         setVisible(true);
     }
     public void actionPerformed(ActionEvent ae){
-        String religion = (String)religionBox.getSelectedItem();
-        String category = (String)categoryBox.getSelectedItem();
-        String income = (String)incomeBox.getSelectedItem();
-        String edu = (String)qualificationBox.getSelectedItem();
-        String ocupation = (String)ocupationBox.getSelectedItem();
-        String senior = null;
-        if(syes.isSelected()){
-            senior = "Yes";
-        }
-        else if(sno.isSelected()){
-            senior = "No";
-        }
-        String exAcnt = null;
-        if(eyes.isSelected()){ 
-            exAcnt = "Yes";
-        }
-        else if(eno.isSelected()){
-            exAcnt = "No";
-        }
-        String pan = panText.getText();
-        String aadhar = aadharText.getText();
-
-        try{
-            if(pan.equals("")||aadhar.equals("")){
-                JOptionPane.showMessageDialog(null,"All fields are Mandatory");
+        if(ae.getSource() == next){
+            String religion = (String)religionBox.getSelectedItem();
+            String category = (String)categoryBox.getSelectedItem();
+            String income = (String)incomeBox.getSelectedItem();
+            String edu = (String)qualificationBox.getSelectedItem();
+            String ocupation = (String)ocupationBox.getSelectedItem();
+            String senior = null;
+            if(syes.isSelected()){
+                senior = "Yes";
             }
-            else{
-                Conn c = new Conn();
-                String query = "insert into signuptwo values('"+formno+"','"+religion+"','"+category+"','"+income+"','"+edu+"','"+ocupation+"','"+pan+"','"+aadhar+"','"+senior+"','"+exAcnt+"');";
-                c.s.executeUpdate(query);
-                
-                setVisible(false);
-                new SignUpThree(formno).setVisible(true);
-
+            else if(sno.isSelected()){
+                senior = "No";
             }
-        }catch(Exception e){
-            System.out.println(e);
+            String exAcnt = null;
+            if(eyes.isSelected()){ 
+                exAcnt = "Yes";
+            }
+            else if(eno.isSelected()){
+                exAcnt = "No";
+            }
+            String pan = panText.getText();
+            String aadhar = aadharText.getText();
+
+            try{
+                if(pan.equals("")||aadhar.equals("")){
+                    JOptionPane.showMessageDialog(null,"All fields are Mandatory");
+                }
+                else{
+                    Conn c = new Conn();
+                    String query = "insert into signuptwo values('"+formno+"','"+religion+"','"+category+"','"+income+"','"+edu+"','"+ocupation+"','"+pan+"','"+aadhar+"','"+senior+"','"+exAcnt+"');";
+                    c.s.executeUpdate(query);
+
+                    setVisible(false);
+                    new SignUpThree(formno).setVisible(true);
+
+                }
+            }catch(SQLException ex1){
+                System.out.println(ex1);
+            }
+        }else if(ae.getSource() == cancel){
+            int choice = JOptionPane.YES_NO_OPTION;
+            choice = JOptionPane.showConfirmDialog(null,"Are you sure want to cancel?","Warning",choice);
+            if(choice == JOptionPane.YES_OPTION){
+                try{
+                    Conn conn = new Conn();
+                    conn.s.executeUpdate("delete from signup where formno = '"+formno+"';");
+                    setVisible(false);
+                    new Login().setVisible(true);
+                }catch(SQLException ex2){
+                    System.out.println(ex2);
+                }
+            }
         }
     }
     public static void main(String args[]) {
