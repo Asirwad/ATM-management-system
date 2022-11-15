@@ -7,7 +7,7 @@
     import com.toedter.calendar.JDateChooser;
 
     public class SignUpOne extends JFrame implements ActionListener{
-        JButton next;
+        JButton next,cancel;
         long random;
         JTextField nameText,fnameText,emailText,addressText,cityText,stateText,pincodeText;
         JRadioButton male,female,otherGender,married,unmarried;
@@ -17,7 +17,7 @@
             setLocation(350,10);
             setResizable(false);
             //getRootPane().setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.BLUE));
-            setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+            setDefaultCloseOperation(EXIT_ON_CLOSE);
             setLayout(null);
             setContentPane(new JLabel(new ImageIcon(ClassLoader.getSystemResource("icons/signUpOneBackground.png"))));
 
@@ -205,52 +205,83 @@
             add(next);
 
             setVisible(true);
+            
+            cancel = new JButton("Cancel");
+            cancel.setFont(new Font("Railway",Font.BOLD,14));
+            cancel.setBounds(100,625,85,25);
+            cancel.setFocusable(false);
+            cancel.setBackground(new Color(123,150,212));
+            cancel.setForeground(Color.WHITE);
+            cancel.setBorderPainted(false);
+            cancel.addActionListener(this);
+            cancel.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseEntered(MouseEvent evt){
+                cancel.setBackground(Color.YELLOW);
+                cancel.setForeground(Color.BLACK);
+            }
+            @Override
+            public void mouseExited(MouseEvent evt){
+                cancel.setBackground(new Color(123,150,212));
+                cancel.setForeground(Color.WHITE);
+            }
+            });
+            add(cancel);
+
+            setVisible(true);
         }
         public void actionPerformed(ActionEvent ae){
-            String formno = ""+random;
-            String name = nameText.getText();
-            String fname = fnameText.getText();
-            String dob = ((JTextField)dateChooser.getDateEditor().getUiComponent()).getText();
-            String gender = null;
-            if(male.isSelected()){
-                gender = "Male";
-            }
-            else if(female.isSelected()){
-                gender = "Female";
-            }
-            else if(otherGender.isSelected()){
-                gender = "Other";
-            }
-            String email = emailText.getText();
-            String maritialStatus = null;
-            if(married.isSelected()){ 
-                maritialStatus = "Married";
-            }
-            else if(unmarried.isSelected()){
-                maritialStatus = "Unmarried";
-            }
-            String address = addressText.getText();
-            String city = cityText.getText();
-            String state = stateText.getText();
-            String pin = pincodeText.getText();
-            
-            try{
-                if(name.equals("")||fname.equals("")||dob.equals("")||email.equals("")||address.equals("")||city.equals("")||state.equals("")||pin.equals("")){
-                    JOptionPane.showMessageDialog(null,"All fields are Mandatory");
+            if(ae.getSource() == next){
+                String formno = ""+random;
+                String name = nameText.getText();
+                String fname = fnameText.getText();
+                String dob = ((JTextField)dateChooser.getDateEditor().getUiComponent()).getText();
+                String gender = null;
+                if(male.isSelected()){
+                    gender = "Male";
                 }
-                else{
-                    Conn c = new Conn();
-                    String query = "insert into signup values('"+formno+"','"+name+"','"+fname+"','"+dob+"','"+gender+"','"+email+"','"+maritialStatus+"','"+address+"','"+city+"','"+pin+"','"+state+"');";
-                    c.s.executeUpdate(query);
-                    
+                else if(female.isSelected()){
+                    gender = "Female";
+                }
+                else if(otherGender.isSelected()){
+                    gender = "Other";
+                }
+                String email = emailText.getText();
+                String maritialStatus = null;
+                if(married.isSelected()){ 
+                    maritialStatus = "Married";
+                }
+                else if(unmarried.isSelected()){
+                    maritialStatus = "Unmarried";
+                }
+                String address = addressText.getText();
+                String city = cityText.getText();
+                String state = stateText.getText();
+                String pin = pincodeText.getText();
+            
+                try{
+                    if(name.equals("")||fname.equals("")||dob.equals("")||email.equals("")||address.equals("")||city.equals("")||state.equals("")||pin.equals("")){
+                        JOptionPane.showMessageDialog(null,"All fields are Mandatory");
+                    }
+                    else{
+                        Conn c = new Conn();
+                        String query = "insert into signup values('"+formno+"','"+name+"','"+fname+"','"+dob+"','"+gender+"','"+email+"','"+maritialStatus+"','"+address+"','"+city+"','"+pin+"','"+state+"');";
+                        c.s.executeUpdate(query);
+
+                        setVisible(false);
+                        new SignUpTwo(formno).setVisible(true);
+                    }
+                }catch(Exception e){
+                    System.out.println(e);
+                }
+            }else if(ae.getSource() == cancel){
+                int choice = JOptionPane.YES_NO_OPTION;
+                choice = JOptionPane.showConfirmDialog(null,"Are you sure want to cancel?","Warning",choice);
+                if(choice == JOptionPane.YES_OPTION){
                     setVisible(false);
-                    new SignUpTwo(formno).setVisible(true);
-                    
+                    new Login().setVisible(true);
                 }
-            }catch(Exception e){
-                System.out.println(e);
-            }
-            
+            }   
         }
         public static void main(String args[]) {
            new SignUpOne();
