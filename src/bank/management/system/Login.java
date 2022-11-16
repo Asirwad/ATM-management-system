@@ -101,7 +101,6 @@ public class Login extends JFrame implements ActionListener{
         
         //BUTTONS
         loginBut = new JButton("SIGN IN");
-        //loginBut.setBorder(new RoundedBorder(10));
         loginBut.setBounds(480,300,220,30);
         loginBut.setBackground(new Color(123,150,212));
         loginBut.setForeground(Color.WHITE);
@@ -112,10 +111,12 @@ public class Login extends JFrame implements ActionListener{
             @Override
             public void mouseEntered(MouseEvent evt){
                 loginBut.setBackground(Color.green);
+                loginBut.setForeground(Color.BLACK);
             }
             @Override
             public void mouseExited(MouseEvent evt){
                 loginBut.setBackground(new Color(123,150,212));
+                loginBut.setForeground(Color.WHITE);
             }
         });
         add(loginBut);
