@@ -4,9 +4,11 @@ package bank.management.system;
 import javax.swing.*;
 import java.awt.*;
 import java.sql.*;
+import java.awt.event.*;
 
 
 public class MiniStatement extends JFrame{
+    int bal;
     String pinNo,cardNo;
     MiniStatement(String pinNo,String cardNo){
         this.pinNo = pinNo;
@@ -39,7 +41,7 @@ public class MiniStatement extends JFrame{
         try{
             ResultSet rs = conn.s.executeQuery("select balance from account where cardno = '"+cardNo+"';");
             rs.next();
-            int bal = rs.getInt("balance");
+            bal = rs.getInt("balance");
             balanceLabel.setText("Balance : Rs"+bal+"/-");
         }catch(SQLException ex){
             System.out.println(ex);
@@ -56,6 +58,27 @@ public class MiniStatement extends JFrame{
             System.out.println(ex);
         }
         
+        JLabel download = new JLabel("Download");
+        download.setBounds(310,20,80,25);
+        download.setFont(new Font("Ariel",Font.BOLD,12));
+        download.setForeground(Color.BLACK);
+        download.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseEntered(MouseEvent ae){
+                download.setText("<html><u>Download</u></html>");
+                download.setForeground(Color.BLUE);
+            }
+            @Override
+            public void mouseExited(MouseEvent ae){
+                download.setText("Download");
+                download.setForeground(Color.BLACK);
+            }
+            @Override
+            public void mouseClicked(MouseEvent ae){
+                new StatementPrinter(statement.getText(),bal);
+            }
+        });
+        add(download);
         
         statement.setBounds(20,140,400,400);
         setSize(400,550);
