@@ -75,7 +75,7 @@ public class MiniStatement extends JFrame{
             }
             @Override
             public void mouseClicked(MouseEvent ae){
-                new StatementPrinter(statement.getText(),bal);
+                new StatementPrinter(cardNo);
             }
         });
         add(download);
