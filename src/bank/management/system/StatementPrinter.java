@@ -39,9 +39,9 @@ public class StatementPrinter {
         }catch(SQLException e){
              System.out.println(e);
         }catch(DocumentException e){
-            System.out.println("Failed to create document");
+            System.out.println(e+"\nFailed to create document");
         }catch(FileNotFoundException e){
-            System.out.println("Failed to create pdf file");
+            System.out.println(e+"\nFailed to create pdf file");
         }
     }
 }
