@@ -172,7 +172,8 @@ public class Transactions extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent ae){
         if(ae.getSource() == exitBut){
-            System.exit(0);
+            setVisible(false);
+            new Login();
         }else if(ae.getSource() == depositBut){
             setVisible(false);
             new Deposit(pinNo,cardNo).setVisible(true);
