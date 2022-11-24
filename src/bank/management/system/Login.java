@@ -2,7 +2,6 @@ package bank.management.system;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.border.Border;
 import java.sql.*;
 
 public class Login extends JFrame implements ActionListener{

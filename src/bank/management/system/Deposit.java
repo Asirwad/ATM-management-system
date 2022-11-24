@@ -5,8 +5,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Deposit extends JFrame implements ActionListener {
     JTextField amountTextField;
