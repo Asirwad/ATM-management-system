@@ -5,7 +5,7 @@ import java.awt.event.*;
 import java.sql.*;
 
 public class Login extends JFrame implements ActionListener{
-    JButton ClrBut,loginBut,signUpBut;
+    JButton ClrBut,loginBut;
     JTextField cardTextField;
     JPasswordField pinTextField;
     JLabel closeLabel,signUpLabel,adminLoginlabel;
@@ -159,6 +159,7 @@ public class Login extends JFrame implements ActionListener{
             }
         });
         add(adminLoginlabel);
+        
 
         setSize(800,480);
         setVisible(true);
@@ -171,21 +172,7 @@ public class Login extends JFrame implements ActionListener{
             pinTextField.setText("");
         }
         else if(ae.getSource() == loginBut){
-            Conn conn = new Conn();
-            String cardNo = cardTextField.getText();
-            String pinNo = pinTextField.getText();
-            String query = "select * from login where cardnumber = '"+cardNo+"' and pin = '"+pinNo+"'";
-            try{
-                ResultSet rs = conn.s.executeQuery(query);
-                if(rs.next()){
-                    setVisible(false);
-                    new Transactions(pinNo,cardNo).setVisible(true);
-                }else{
-                    JOptionPane.showMessageDialog(null,"Invalid credentials");
-                }
-            }catch(Exception e){
-                //do nothing, have a kitkat
-            }
+            userLoginEvent();
         }
         
     }
@@ -204,9 +191,25 @@ public class Login extends JFrame implements ActionListener{
         setVisible(false);
         new AdminLogin().setVisible(true);
     }
+    public void userLoginEvent(){
+        Conn conn = new Conn();
+        String cardNo = cardTextField.getText();
+        String pinNo = pinTextField.getText();
+        String query = "select * from login where cardnumber = '"+cardNo+"' and pin = '"+pinNo+"'";
+        try{
+            ResultSet rs = conn.s.executeQuery(query);
+            if(rs.next()){
+                setVisible(false);
+                new Transactions(pinNo,cardNo).setVisible(true);
+            }else{
+                JOptionPane.showMessageDialog(null,"Invalid credentials");
+            }
+        }catch(HeadlessException | SQLException e){
+            //do nothing, have a kitkat
+        }
+    }
     public static void main(String[] args) {
-        Login login = new Login();
-        
+        new Login();  
     }
 }
 
