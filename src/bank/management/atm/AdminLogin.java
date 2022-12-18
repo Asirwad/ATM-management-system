@@ -1,8 +1,11 @@
-package bank.management.system;
+package bank.management.atm;
+
+import bank.management.dash.Dashboard;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
+import javafx.application.Application;
 import javax.swing.border.LineBorder;
 
 public class AdminLogin extends JFrame implements ActionListener{
@@ -163,11 +166,13 @@ public class AdminLogin extends JFrame implements ActionListener{
                     JOptionPane.showMessageDialog(null,"Please enter a password");
                 else if(rs.next()){
                     System.out.println(rs.getString("name"));
+                    setVisible(false);
                     //admin dashboard object here
+                    Application.launch(Dashboard.class,rs.getString("name"));
                 }else{
                     JOptionPane.showMessageDialog(null,"Invalid Crediantals");
                 }
-            }catch(Exception e){
+            }catch(HeadlessException | SQLException e){
                 //do nothing ,have a kitkat
             }
         }

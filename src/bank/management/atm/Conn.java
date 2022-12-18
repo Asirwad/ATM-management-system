@@ -1,4 +1,4 @@
-package bank.management.system;
+package bank.management.atm;
 import java.sql.*;
 public class Conn {
     Connection c;

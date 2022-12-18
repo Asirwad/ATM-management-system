@@ -1,4 +1,4 @@
-package bank.management.system;
+package bank.management.atm;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -177,6 +177,17 @@ public class Login extends JFrame implements ActionListener{
         
     }
     public void closeLabelEvent(MouseEvent evt){//CLOSE OPERATION
+        /*setFocusable(false);
+        WarningFrame wf = new WarningFrame();
+        System.out.println(wf.getReturnVal());
+        wf.setVisible(true);
+        if(wf.getReturnVal()==1){
+            System.exit(0);
+        }
+        else if(wf.getReturnVal()==0){
+            wf.setVisible(false);
+            setFocusable(true);
+        }*/
         int closeLabelChoice = JOptionPane.YES_NO_OPTION;
         closeLabelChoice = JOptionPane.showConfirmDialog(null,"Are you sure want to exit?","Warning",closeLabelChoice);
         if(closeLabelChoice == JOptionPane.YES_OPTION){

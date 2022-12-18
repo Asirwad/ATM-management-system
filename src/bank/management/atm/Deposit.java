@@ -1,17 +1,16 @@
-package bank.management.system;
+package bank.management.atm;
 
 import java.awt.event.*;
 import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;
 import java.util.Date;
-import java.sql.*;
 
-public class Withdraw extends JFrame implements ActionListener {
+public class Deposit extends JFrame implements ActionListener {
     JTextField amountTextField;
-    JButton withdrawBut,backBut;
+    JButton depositBut,backBut;
     String pinNo,cardNo;
-    Withdraw(String pinNo,String cardNo){
+    Deposit(String pinNo,String cardNo){
         this.pinNo = pinNo;
         this.cardNo = cardNo;
         setLayout(null);
@@ -25,7 +24,7 @@ public class Withdraw extends JFrame implements ActionListener {
         bgImg.setBounds(0,0,800,750);
         add(bgImg);
         
-        JLabel text = new JLabel("Enter the amount you want to withdraw");
+        JLabel text = new JLabel("Enter the amount you want to deposit");
         text.setBounds(157,270,700,35);
         text.setFont(systemFont);
         text.setForeground(Color.WHITE);
@@ -37,27 +36,27 @@ public class Withdraw extends JFrame implements ActionListener {
         amountTextField.setBorder(javax.swing.BorderFactory.createEmptyBorder());
         bgImg.add(amountTextField);
         
-        withdrawBut = new JButton("Withdraw");
-        withdrawBut.setBounds(368,435,90,25);
-        withdrawBut.setBackground(Color.WHITE);
-        withdrawBut.setForeground(Color.BLACK);
-        withdrawBut.setFocusable(false);
-        withdrawBut.setBorderPainted(false);
-        withdrawBut.addActionListener(this);
-        withdrawBut.addMouseListener(new MouseAdapter(){
+        depositBut = new JButton("Deposit");
+        depositBut.setBounds(372,435,80,25);
+        depositBut.setBackground(Color.WHITE);
+        depositBut.setForeground(Color.BLACK);
+        depositBut.setFocusable(false);
+        depositBut.setBorderPainted(false);
+        depositBut.addActionListener(this);
+        depositBut.addMouseListener(new MouseAdapter(){
             @Override
             public void mouseEntered(MouseEvent evt){
-                withdrawBut.setBackground(Color.green);
+                depositBut.setBackground(Color.green);
             }
             @Override
             public void mouseExited(MouseEvent evt){
-                withdrawBut.setBackground(Color.WHITE);
+                depositBut.setBackground(Color.WHITE);
             }
         });
-        bgImg.add(withdrawBut);
+        bgImg.add(depositBut);
         
         backBut = new JButton("Back");
-        backBut.setBounds(368,465,90,25);
+        backBut.setBounds(372,465,80,25);
         backBut.setBackground(Color.lightGray);
         backBut.setForeground(Color.BLACK);
         backBut.setFocusable(false);
@@ -89,41 +88,30 @@ public class Withdraw extends JFrame implements ActionListener {
         if(ae.getSource() == backBut){
             setVisible(false);
             new Transactions(pinNo,cardNo).setVisible(true);
-        }else if(ae.getSource() == withdrawBut){
+        }else if(ae.getSource() == depositBut){
             String amount = amountTextField.getText();
             Date date = new Date();
             if(amount.equals("") || Integer.parseInt(amount)<=0){
-                JOptionPane.showMessageDialog(null,"Please enter a valid amount you want to withdraw");
+                JOptionPane.showMessageDialog(null,"Please enter a valid amount you want to deposit");
             }else{
                 Conn conn = new Conn();
+                String query = "insert into bank values('"+cardNo+"','"+pinNo+"','"+date+"','Deposit','"+amount+"');";
                 int intAmount = Integer.parseInt(amount);
-                String queryBank = "insert into bank values('"+cardNo+"','"+pinNo+"','"+date+"','Withdrawl','"+amount+"');";
-                String balanceCheckQuery = "select balance from account where cardno = '"+cardNo+"'";
-                String accountQuery = "insert into account values('"+cardNo+"','"+pinNo+"','"+intAmount+"') ON DUPLICATE KEY UPDATE balance = balance - '"+intAmount+"';";
-                try{
-                    ResultSet rs = conn.s.executeQuery(balanceCheckQuery);
-                    rs.next();
-                    int balance = rs.getInt("balance");
-                    if(balance <=0 || balance-Integer.parseInt(amount)<0){
-                        JOptionPane.showMessageDialog(null,"Not eneough balance");
-                    }else{
-                        try {
-                            conn.s.executeUpdate(queryBank);
-                            conn.s.executeUpdate(accountQuery);
-                            JOptionPane.showMessageDialog(null,"Rs"+amount+" Withdrawed successfully");
-                            setVisible(false);
-                            new Transactions(pinNo,cardNo).setVisible(true);
-                        }catch (SQLException ex2){
-                             System.out.println(ex2);
-                        }
-                    }
-                }catch(SQLException ex1){
-                    System.out.println(ex1);
+                String accountQuery = "insert into account values('"+cardNo+"','"+pinNo+"','"+intAmount+"') ON DUPLICATE KEY UPDATE balance = balance + '"+intAmount+"';";
+                try {
+                    conn.s.executeUpdate(query);
+                    conn.s.executeUpdate(accountQuery);
+                    JOptionPane.showMessageDialog(null,"Rs"+amount+" Deposited successfully");
+                    setVisible(false);
+                    new Transactions(pinNo,cardNo).setVisible(true);
+                } catch (SQLException ex) {
+                    System.out.println(cardNo);
+                    System.out.println(ex);
                 }
             }
         }
     }
-    public static void main(String args[]){
-        new Withdraw("","");
+    public static void main(String args[]) {
+        new Deposit("","");
     }
 }
