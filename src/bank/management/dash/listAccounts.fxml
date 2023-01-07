@@ -45,7 +45,7 @@
                      </VBox.margin></FontAwesomeIconView>
                </children>
             </VBox>
-            <Circle fx:id="avatarCircle" fill="WHITE" layoutX="24.0" layoutY="565.0" radius="15.0" stroke="#c1c1c1" strokeType="INSIDE" />
+            <Circle fx:id="avatarCircle" fill="WHITE" layoutX="24.0" layoutY="565.0" onMousePressed="#avatarIconClicked" radius="15.0" stroke="#c1c1c1" strokeType="INSIDE" />
          </children>
       </AnchorPane>
    </left>

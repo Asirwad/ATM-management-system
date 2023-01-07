@@ -97,6 +97,7 @@ public class DashboardHomeController implements Initializable {
         }
     }
 
+    
     @FXML
     private void avatarCircleClicked(MouseEvent event) {
         if(!popupShowing){
