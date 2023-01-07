@@ -223,7 +223,7 @@
             </VBox>
             <AnchorPane fx:id="bottomAnchor" layoutX="40.0" layoutY="290.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="290.0">
                <children>
-                  <Label layoutX="15.0" layoutY="15.0" text="Monthly Summary" textFill="#4c4c4e" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+                  <Label layoutX="15.0" layoutY="20.0" text="Capital Summary" textFill="#4c4c4e" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="20.0">
                      <font>
                         <Font name="Calibri Bold" size="16.0" />
                      </font>

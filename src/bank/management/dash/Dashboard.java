@@ -11,7 +11,6 @@ import javafx.stage.StageStyle;
 public class Dashboard extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception{
-       //nameRetrive();
        
        Parent root = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
        Scene scene = new Scene(root);
@@ -20,19 +19,8 @@ public class Dashboard extends Application{
        primaryStage.initStyle(StageStyle.DECORATED);
        primaryStage.show();
        
-       
     }
     public static void main(String[] args){
         launch(args);
-    }
-    public void nameRetrive(){
-        try{
-            Parameters params = getParameters();
-            List<String> pList = params.getRaw();
-            String name = pList.get(0);
-            System.out.println(name);
-       }catch(Exception ex){
-           System.out.println(ex);
-       }
     }
 }
