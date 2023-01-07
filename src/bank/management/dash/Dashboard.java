@@ -11,7 +11,7 @@ import javafx.stage.StageStyle;
 public class Dashboard extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception{
-       nameRetrive();
+       //nameRetrive();
        
        Parent root = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
        Scene scene = new Scene(root);

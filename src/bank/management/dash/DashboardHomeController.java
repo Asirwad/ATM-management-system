@@ -1,12 +1,13 @@
 package bank.management.dash;
 
 import bank.management.atm.AdminLogin;
+import bank.management.atm.Conn;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.*;
 import java.util.Optional;
 import java.util.ResourceBundle;import javafx.application.Platform;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -37,43 +38,23 @@ public class DashboardHomeController implements Initializable {
     @FXML
     private BarChart<String, Double> chart;
     @FXML
-    private FontAwesomeIconView homeIcon,listIcon,imageIcon,settingsIcon;
+    private FontAwesomeIconView homeIcon,listIcon,imageIcon,settingsIcon,menuIcon;
     @FXML
     private Button viewAllTransacBut,settingsBut;
     @FXML
-    private FontAwesomeIconView menuIcon;
-    @FXML
     private AnchorPane navBarAnchor;
     @FXML
-    private Label dateLabel;
+    private Label dateLabel,incomeLabel,expenseLabel,dateLabelFooter;
     @FXML
     private AnchorPane bottomAnchor;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //getting current date and time
-        java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd-MMM-yyyy");
-        java.util.Date date = new java.util.Date();
-        dateLabel.setText(formatter.format(date));
         
-        try{
-            Image avatarImage = new Image(getClass().getResourceAsStream("/icons/xav.jpg"));
-            avatarCircle.setFill(new ImagePattern(avatarImage));
-        }catch(Exception ex){
-            System.out.println(ex);
-        }
-        XYChart.Series<String, Double> series_01 = new XYChart.Series<String, Double>();
-        series_01.setName("Year 2022");
-        series_01.getData().add(new XYChart.Data("Jan", 500));
-        series_01.getData().add(new XYChart.Data("Feb", 400));
-        series_01.getData().add(new XYChart.Data("Mar", 300));
-        series_01.getData().add(new XYChart.Data("Apr", 200));
-        series_01.getData().add(new XYChart.Data("May", 700));
-        chart.getData().add(series_01);
-        
-        
-        
-        
-    }    
+        incomeAndExpense();
+        dateCalculator();
+        avatarImageFetcher();
+        barChartCalculator(); 
+    }   
 
     @FXML
     private void viewAllTransacFun(MouseEvent event) {
@@ -142,6 +123,81 @@ public class DashboardHomeController implements Initializable {
             });
             popupShowing = true;
         }
+    }
+
+    private void incomeAndExpense() {
+        try{
+            Conn conn = new Conn();
+            ResultSet rsDeposit = conn.s.executeQuery("select amount from bank where type='Deposit';");
+            rsDeposit.next();
+            float totalAmount=0;
+            while(rsDeposit.next()){
+                totalAmount+=rsDeposit.getInt("amount");
+            }
+            incomeLabel.setText("₹"+totalAmount);
+            ResultSet rsWithdraw = conn.s.executeQuery("select amount from bank where type='Withdrawl';");
+            rsWithdraw.next();
+            totalAmount=0;
+            while(rsWithdraw.next()){
+                totalAmount+=rsWithdraw.getInt("amount");
+            }
+            expenseLabel.setText("₹"+totalAmount);
+        }catch(SQLException ex){
+            //do nothing
+        }
+    }
+
+    private void dateCalculator() {
+        java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd-MMM-yyyy");
+        java.util.Date date = new java.util.Date();
+        dateLabel.setText(formatter.format(date));
+        dateLabelFooter.setText(formatter.format(date));
+    }
+
+    private void avatarImageFetcher() {
+        try{
+            Image avatarImage = new Image(getClass().getResourceAsStream("/icons/xav.jpg"));
+            avatarCircle.setFill(new ImagePattern(avatarImage));
+        }catch(Exception ex){
+            System.out.println(ex);
+        }
+    }
+
+    private void barChartCalculator() {
+        float totalSavingsAmount=0,totalFixedAmount=0,totalRDAmount=0,totalCurrentAmount=0;
+        try{
+            Conn conn = new Conn();
+            ResultSet rsSavings = conn.s.executeQuery("select bank.amount from bank natural join signupthree where accountType='Savings Account';");
+            //rsSavings.next();
+            while(rsSavings.next()){
+                totalSavingsAmount+=rsSavings.getInt("amount");
+            }
+            ResultSet rsFixed = conn.s.executeQuery("select bank.amount from bank natural join signupthree where accountType='Fixed Account';");
+            //rsFixed.next();
+            while(rsFixed.next()){
+                totalFixedAmount+=rsFixed.getInt("amount");
+            }
+            ResultSet rsRD = conn.s.executeQuery("select bank.amount from bank natural join signupthree where accountType='Recurring Deposit Account';");
+            //rsRD.next();
+            while(rsRD.next()){
+               totalRDAmount+=rsRD.getInt("amount");
+            }
+            ResultSet rsCurrent = conn.s.executeQuery("select bank.amount from bank natural join signupthree where accountType='Current Account';");
+            //rsCurrent.next();
+            while(rsCurrent.next()){
+                totalCurrentAmount+=rsCurrent.getInt("amount");
+            }
+
+        }catch(SQLException ex){
+            System.out.println(ex);
+        }
+        XYChart.Series<String, Double> series_01 = new XYChart.Series<String, Double>();
+        series_01.setName("Account type wise transactions");
+        series_01.getData().add(new XYChart.Data("Savings", totalSavingsAmount));
+        series_01.getData().add(new XYChart.Data("Fixed", totalFixedAmount));
+        series_01.getData().add(new XYChart.Data("RD", totalRDAmount));
+        series_01.getData().add(new XYChart.Data("Current", totalCurrentAmount));
+        chart.getData().add(series_01);
     }
     
 }

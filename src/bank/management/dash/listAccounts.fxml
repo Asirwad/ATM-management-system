@@ -4,6 +4,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
@@ -83,6 +85,16 @@
                   </HBox>
                </children>
             </VBox>
+            <TableView layoutX="40.0" layoutY="76.0" prefHeight="501.0" prefWidth="897.0">
+              <columns>
+                <TableColumn prefWidth="268.0" text="Card Number" />
+                <TableColumn prefWidth="93.0" text="Account Type" />
+                  <TableColumn prefWidth="125.0" text="First Name" />
+                  <TableColumn prefWidth="119.0" text="Last Name" />
+                  <TableColumn prefWidth="119.0" text="Balance" />
+                  <TableColumn prefWidth="172.0" text="Last Login" />
+              </columns>
+            </TableView>
          </children>
       </AnchorPane>
    </center>

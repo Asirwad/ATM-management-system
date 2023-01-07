@@ -32,15 +32,7 @@ public class ListAccountsController implements Initializable {
     @FXML
     private AnchorPane navBarAnchor;
     @FXML
-    private FontAwesomeIconView menuIcon;
-    @FXML
-    private FontAwesomeIconView homeIcon;
-    @FXML
-    private FontAwesomeIconView listIcon;
-    @FXML
-    private FontAwesomeIconView imageIcon;
-    @FXML
-    private FontAwesomeIconView settingsIcon;
+    private FontAwesomeIconView menuIcon,homeIcon,listIcon,imageIcon,settingsIcon;
     @FXML
     private Circle avatarCircle;
     @FXML
@@ -51,6 +43,7 @@ public class ListAccountsController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+       
         //setting date
         java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd-MMM-yyyy");
         java.util.Date date = new java.util.Date();
