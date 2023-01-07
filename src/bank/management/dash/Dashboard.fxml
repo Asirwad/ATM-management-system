@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane id="BorderPane" prefHeight="600.0" prefWidth="1024.0" styleClass="parent" stylesheets="@dashboard.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bank.management.dash.DashboardHomeController">
+   <left>
+      <AnchorPane fx:id="navBarAnchor" prefHeight="200.0" prefWidth="45.0" styleClass="sidebar" BorderPane.alignment="CENTER">
+         <children>
+            <FontAwesomeIconView fx:id="menuIcon" fill="#4c4c4e" glyphName="BARS" layoutX="17.0" layoutY="25.0" size="1.5em" styleClass="menuOption" text="" AnchorPane.leftAnchor="14.5" AnchorPane.rightAnchor="14.5" AnchorPane.topAnchor="15.0" />
+            <VBox layoutX="13.0" layoutY="216.0">
+               <children>
+                  <FontAwesomeIconView fx:id="homeIcon" fill="#2b49b3" glyphName="HOME" size="1.5em" />
+                  <FontAwesomeIconView fx:id="listIcon" glyphName="LIST_UL" onMouseClicked="#listIconClicked" size="1.5em" styleClass="sidebar_opt">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </FontAwesomeIconView>
+                  <FontAwesomeIconView fx:id="imageIcon" glyphName="IMAGE" size="1.5em" styleClass="sidebar_opt">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </FontAwesomeIconView>
+                  <FontAwesomeIconView fx:id="settingsIcon" glyphName="GEAR" size="1.5em" styleClass="sidebar_opt">
+                     <VBox.margin>
+                        <Insets left="2.0" top="15.0" />
+                     </VBox.margin>
+                  </FontAwesomeIconView>
+                  <Separator>
+                     <VBox.margin>
+                        <Insets bottom="15.0" top="15.0" />
+                     </VBox.margin>
+                  </Separator>
+                  <FontAwesomeIconView fill="#4c4c4e" glyphName="PLUS" size="1.5em" wrappingWidth="17.142857551574707">
+                     <VBox.margin>
+                        <Insets left="2.0" />
+                     </VBox.margin></FontAwesomeIconView>
+               </children>
+            </VBox>
+            <Circle fx:id="avatarCircle" fill="WHITE" layoutX="24.0" layoutY="565.0" onMouseClicked="#avatarCircleClicked" radius="15.0" stroke="#c1c1c1" strokeType="INSIDE" />
+         </children>
+      </AnchorPane>
+   </left>
+   <center>
+      <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" style="-fx-background-color: #f3f3f3;" BorderPane.alignment="CENTER">
+         <children>
+            <VBox layoutX="39.0" prefHeight="250.0" prefWidth="850.0" styleClass="pane" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <HBox>
+                     <children>
+                        <Label text="Dashboard" textFill="#2b49b3">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Separator orientation="VERTICAL">
+                           <HBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </HBox.margin>
+                        </Separator>
+                        <Label layoutX="25.0" layoutY="25.0" text="Hello Mate, welcome back!" textFill="#4c4c4e">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="dateLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="128.0" layoutY="25.0" maxWidth="1.7976931348623157E308" text="2:03 29 May 2022" textFill="#7a7a7c" HBox.hgrow="ALWAYS">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets bottom="30.0" top="10.0" />
+                     </VBox.margin>
+                     <children>
+                        <VBox>
+                           <children>
+                              <Label text="My Cards" textFill="#4c4c4e">
+                                 <font>
+                                    <Font name="Calibri Bold" size="16.0" />
+                                 </font>
+                              </Label>
+                              <HBox>
+                                 <children>
+                                    <Button mnemonicParsing="false" prefHeight="75.0" prefWidth="75.0" styleClass="plus_btn">
+                                       <graphic>
+                                          <FontAwesomeIconView fill="#c1c1c1" glyphName="PLUS" size="2em" stroke="#c1c1c1" strokeWidth="0.0" />
+                                       </graphic>
+                                    </Button>
+                                    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="250.0" styleClass="colored_card">
+                                       <HBox.margin>
+                                          <Insets left="15.0" />
+                                       </HBox.margin>
+                                       <children>
+                                          <Label text="VISA" textFill="#fcfcfc" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+                                             <font>
+                                                <Font name="System Bold Italic" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="20.0" layoutY="95.0" text="\$500.34" textFill="#fcfcfc" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="80.0">
+                                             <font>
+                                                <Font name="System Bold" size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="20.0" layoutY="140.0" text="**** **** **** 4565 " textFill="#fcfcfc" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="110.0">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane layoutX="100.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="150.0" prefWidth="250.0" styleClass="uncolored_card">
+                                       <children>
+                                          <Label text="RuPAY" textFill="#212121" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+                                             <font>
+                                                <Font name="System Bold Italic" size="15.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="20.0" layoutY="95.0" text="\$2500.34" textFill="#212121" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="80.0">
+                                             <font>
+                                                <Font name="System Bold" size="20.0" />
+                                             </font>
+                                          </Label>
+                                          <Label layoutX="20.0" layoutY="140.0" text="**** **** **** 6665 " textFill="#212121" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="110.0">
+                                             <font>
+                                                <Font name="System Bold" size="14.0" />
+                                             </font>
+                                          </Label>
+                                       </children>
+                                       <HBox.margin>
+                                          <Insets left="15.0" />
+                                       </HBox.margin>
+                                    </AnchorPane>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
+                           <padding>
+                              <Insets left="15.0" top="15.0" />
+                           </padding>
+                        </VBox>
+                        <Separator maxHeight="1.7976931348623157E308" minHeight="-Infinity" orientation="VERTICAL" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </HBox.margin>
+                        </Separator>
+                        <VBox prefWidth="150.0" HBox.hgrow="ALWAYS">
+                           <padding>
+                              <Insets top="15.0" />
+                           </padding>
+                           <children>
+                              <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+                                 <children>
+                                    <Label alignment="CENTER" contentDisplay="RIGHT" text="Last Month" textFill="#2b49b3">
+                                       <font>
+                                          <Font name="Calibri Bold" size="14.0" />
+                                       </font>
+                                       <padding>
+                                          <Insets right="5.0" top="5.0" />
+                                       </padding>
+                                    </Label>
+                                    <FontAwesomeIconView fill="#2b49b3" glyphName="SORT_DOWN" size="1.5em" textAlignment="CENTER" />
+                                 </children>
+                              </HBox>
+                              <Label text="Income" textFill="#a5a6ab">
+                                 <font>
+                                    <Font name="Calibri Bold" size="14.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="5.0" left="15.0" right="15.0" top="15.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label alignment="CENTER" prefHeight="35.0" prefWidth="35.0" styleClass="circle_label">
+                                 <graphic>
+                                    <FontAwesomeIconView fill="#7dcaa2" glyphName="ARROW_UP" size="1.3em" />
+                                 </graphic>
+                                 <VBox.margin>
+                                    <Insets left="45.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label text="Expenses" textFill="#a5a6ab">
+                                 <font>
+                                    <Font name="Calibri Bold" size="14.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label alignment="CENTER" layoutX="10.0" layoutY="47.0" prefHeight="35.0" prefWidth="35.0" styleClass="circle_label">
+                                 <graphic>
+                                    <FontAwesomeIconView fill="#e5707a" glyphName="ARROW_DOWN" size="1.3em" />
+                                 </graphic>
+                                 <VBox.margin>
+                                    <Insets left="45.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <AnchorPane fx:id="bottomAnchor" layoutX="40.0" layoutY="290.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="290.0">
+               <children>
+                  <Label layoutX="15.0" layoutY="15.0" text="Monthly Summary" textFill="#4c4c4e" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="15.0">
+                     <font>
+                        <Font name="Calibri Bold" size="16.0" />
+                     </font>
+                  </Label>
+                  <VBox alignment="BOTTOM_LEFT" layoutX="15.0" layoutY="50.0" prefHeight="200.0" prefWidth="235.0" styleClass="plus_btn">
+                     <children>
+                        <Label text="Income" textFill="#4e9a72">
+                           <font>
+                              <Font name="Calibri Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label text="\$500.34" textFill="#787878">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <Separator prefWidth="200.0">
+                           <VBox.margin>
+                              <Insets bottom="15.0" top="15.0" />
+                           </VBox.margin>
+                        </Separator>
+                        <Label text="Expense" textFill="#e45967">
+                           <font>
+                              <Font name="Calibri Bold" size="16.0" />
+                           </font>
+                        </Label>
+                        <Label text="\$500.34" textFill="#787878">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </padding>
+                  </VBox>
+                  <VBox layoutX="259.0" layoutY="16.0" prefHeight="256.0" prefWidth="418.0">
+                     <children>
+                        <Label alignment="CENTER_RIGHT" maxWidth="1.7976931348623157E308" text="Generated Report" textFill="#2b49b3">
+                           <font>
+                              <Font name="System Bold" size="15.0" />
+                           </font>
+                        </Label>
+                        <BarChart fx:id="chart" styleClass="chart-bar">
+                          <xAxis>
+                            <CategoryAxis side="BOTTOM" />
+                          </xAxis>
+                          <yAxis>
+                            <NumberAxis side="LEFT" />
+                          </yAxis>
+                        </BarChart>
+                        <Label layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" text="02:43 29 May 2022" textFill="#7a7a7c">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <Button fx:id="viewAllTransacBut" layoutX="735.0" layoutY="112.0" mnemonicParsing="false" onMouseClicked="#viewAllTransacFun" prefWidth="150.0" styleClass="transac_settings_button" text="View all transactions" AnchorPane.bottomAnchor="158.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="112.0">
+                     <font>
+                        <Font name="Calibri Bold" size="13.0" />
+                     </font>
+                     <effect>
+                        <DropShadow blurType="ONE_PASS_BOX">
+                           <color>
+                              <Color red="0.5657894611358643" green="0.5526924729347229" blue="0.5526924729347229" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Button>
+                  <Button fx:id="settingsBut" layoutX="735.0" layoutY="158.0" mnemonicParsing="false" prefWidth="150.0" styleClass="transac_settings_button" text="Settings" AnchorPane.bottomAnchor="112.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="158.0">
+                     <font>
+                        <Font name="Calibri Bold" size="13.0" />
+                     </font>
+                     <effect>
+                        <DropShadow blurType="ONE_PASS_BOX">
+                           <color>
+                              <Color red="0.5657894611358643" green="0.5526924729347229" blue="0.5526924729347229" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>

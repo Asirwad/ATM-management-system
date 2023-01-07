@@ -1,8 +1,8 @@
 package bank.management.atm;
 import java.sql.*;
 public class Conn {
-    Connection c;
-    Statement s;
+    public Connection c;
+    public Statement s;
     public Conn(){
         try{
             //Class.forName(com.mysql.cj.jdbc.Driver);

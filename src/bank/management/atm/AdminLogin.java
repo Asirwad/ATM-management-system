@@ -13,7 +13,7 @@ public class AdminLogin extends JFrame implements ActionListener{
     JPasswordField passwordText;
     JLabel closeLabel;
     JButton clearBut,signInBut,backBut;
-    AdminLogin(){
+    public AdminLogin(){
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setUndecorated(true);
         setLayout(null);
@@ -165,7 +165,6 @@ public class AdminLogin extends JFrame implements ActionListener{
                 else if(password.equals(""))
                     JOptionPane.showMessageDialog(null,"Please enter a password");
                 else if(rs.next()){
-                    System.out.println(rs.getString("name"));
                     setVisible(false);
                     //admin dashboard object here
                     Application.launch(Dashboard.class,rs.getString("name"));

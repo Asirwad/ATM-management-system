@@ -1,0 +1,45 @@
+.logoutButton{
+ -fx-alignment: center;
+ -fx-background-color: #AF40FF;
+ -fx-border: 0;
+ -fx-border-radius: 8px;
+ -fx-box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
+ -fx-box-sizing: border-box;
+ -fx-text-fill: #FFFFFF;
+ -fx-display: flex;
+ -fx-font-family: Phantomsans, sans-serif;
+ -fx-font-size: 18px;
+ -fx-alignment: center;
+ -fx-line-height: 1em;
+ -fx-max-width: 100%;
+ -fx-min-width: 140px;
+ -fx-padding: 3px;
+ -fx-text-decoration: none;
+ -fx-user-select: none;
+ -fx-user-select: none;
+ -fx-touch-action: manipulation;
+ -fx-white-space: nowrap;
+ -fx-transition: all .3s;
+}
+.logoutButton:active,
+.logoutButton:hover {
+ -fx-background-color: #2B49B3;
+ -fx-text-fill: #FFFFFF;
+ outline: 0;
+}
+.logoutButton span {
+ -fx-background-color: rgb(5, 6, 45);
+ -fx-padding: 16px;
+ -fx-border-radius: 6px;
+ -fx-pref-width: 100%;
+ -fx-pref-height: 100%;
+ -fx-transition: 300ms;
+}
+.logoutButton:hover span {
+ -fx-background-color: none;
+}
+.logoutButton:active {
+ -fx-scale: 0.9;
+}
+
+
