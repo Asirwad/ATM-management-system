@@ -45,9 +45,9 @@
                         <Insets bottom="15.0" top="15.0" />
                      </VBox.margin>
                   </Separator>
-                  <FontAwesomeIconView fill="#4c4c4e" glyphName="PLUS" size="1.5em" wrappingWidth="17.142857551574707">
+                  <FontAwesomeIconView fx:id="plusBut" fill="#4c4c4e" glyphName="PLUS" onMouseClicked="#plusButClicked" size="1.5em" styleClass="sidebar_plus_icon" wrappingWidth="17.142857551574707">
                      <VBox.margin>
-                        <Insets left="2.0" />
+                        <Insets left="3.0" />
                      </VBox.margin></FontAwesomeIconView>
                </children>
             </VBox>

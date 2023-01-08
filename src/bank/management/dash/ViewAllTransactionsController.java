@@ -62,6 +62,8 @@ public class ViewAllTransactionsController implements Initializable {
     private TableColumn<TransactionModel, String> type;
     @FXML
     private TableColumn<TransactionModel, Double> amount;
+    @FXML
+    private FontAwesomeIconView plusBut;
 
     /**
      * Initializes the controller class.
@@ -160,28 +162,28 @@ public class ViewAllTransactionsController implements Initializable {
        
         cardNumber.setCellValueFactory(new PropertyValueFactory<>("cardNumber"));
         Label cardNumLabel = new Label("Card Number");
-        cardNumLabel.setStyle("-fx-background-color: #2B49B3; -fx-text-fill: white;");
+        cardNumLabel.setStyle("-fx-background-color: linear-gradient(to right,#1A3384,#2B49B3); -fx-text-fill: white;");
         cardNumLabel.setMaxWidth(Double.MAX_VALUE);
         cardNumLabel.setMaxHeight(Double.MAX_VALUE);
         cardNumber.setGraphic(cardNumLabel);
         
         date.setCellValueFactory(new PropertyValueFactory<>("date"));
         Label dateCellLabel = new Label("Date");
-        dateCellLabel.setStyle("-fx-background-color: #2B49B3; -fx-text-fill: white;");
+        dateCellLabel.setStyle("-fx-background-color: linear-gradient(to right,#1A3384,#2B49B3); -fx-text-fill: white;");
         dateCellLabel.setMaxWidth(Double.MAX_VALUE);
         dateCellLabel.setMaxHeight(Double.MAX_VALUE);
         date.setGraphic(dateCellLabel);
         
         type.setCellValueFactory(new PropertyValueFactory<>("type"));
         Label typeLabel = new Label("Type");
-        typeLabel.setStyle("-fx-background-color: #2B49B3; -fx-text-fill: white;");
+        typeLabel.setStyle("-fx-background-color: linear-gradient(to right,#1A3384,#2B49B3); -fx-text-fill: white;");
         typeLabel.setMaxWidth(Double.MAX_VALUE);
         typeLabel.setMaxHeight(Double.MAX_VALUE);
         type.setGraphic(typeLabel);
         
         amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
         Label amountLabel = new Label("Amount");
-        amountLabel.setStyle("-fx-background-color: #2B49B3; -fx-text-fill: white;");
+        amountLabel.setStyle("-fx-background-color: linear-gradient(to right,#1A3384,#2B49B3); -fx-text-fill: white;");
         amountLabel.setMaxWidth(Double.MAX_VALUE);
         amountLabel.setMaxHeight(Double.MAX_VALUE);
         amount.setGraphic(amountLabel);
@@ -233,6 +235,22 @@ public class ViewAllTransactionsController implements Initializable {
             
             Stage stage = (Stage) settingsIcon.getScene().getWindow();
             stage.setScene(settingsScene);
+            
+            
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    private void plusButClicked(MouseEvent event) {
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddAdmin.fxml"));
+            Parent root = loader.load();
+            
+            Scene addUserScene = new Scene(root);
+            
+            Stage stage = (Stage) plusBut.getScene().getWindow();
+            stage.setScene(addUserScene);
             
             
         }catch(IOException e){

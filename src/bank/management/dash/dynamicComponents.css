@@ -1,6 +1,7 @@
 .logoutButton{
  -fx-alignment: center;
- -fx-background-color: #AF40FF;
+ -fx-background-color: linear-gradient(to right,#1A3384,#2B49B3);
+ 
  -fx-border: 0;
  -fx-border-radius: 8px;
  -fx-box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
@@ -24,7 +25,7 @@
 }
 .logoutButton:active,
 .logoutButton:hover {
- -fx-background-color: #2B49B3;
+ -fx-background-color: linear-gradient(to right,#1A3384,#AF40FF);
  -fx-text-fill: #FFFFFF;
  outline: 0;
 }

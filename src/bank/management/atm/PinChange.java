@@ -114,8 +114,22 @@ public class PinChange extends JFrame implements ActionListener{
            try{
                String newPin = pinTextField.getText();
                String newPin2 = pin2TextField.getText();
+               try{
+                   int pinDummy = Integer.parseInt(newPin);
+               }catch(NumberFormatException e){
+                   JOptionPane.showMessageDialog(null,"PIN should contain only numbers");
+                   pinTextField.setText("");
+                   pin2TextField.setText("");
+                   return;
+               }
                if(newPin.equals("")){
                    JOptionPane.showMessageDialog(null,"Please enter a new pin");
+                   return;
+               }
+               if(newPin.length()!=4){
+                   JOptionPane.showMessageDialog(null,"PIN should contain exactly 4 numbers");
+                   pinTextField.setText("");
+                   pin2TextField.setText("");
                    return;
                }
                if(newPin2.equals("")){
@@ -124,6 +138,8 @@ public class PinChange extends JFrame implements ActionListener{
                }
                if(!newPin.equals(newPin2)){
                    JOptionPane.showMessageDialog(null,"Entered pins does not match");
+                   pinTextField.setText("");
+                   pin2TextField.setText("");
                    return;
                }
                Conn conn = new Conn();

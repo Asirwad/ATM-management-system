@@ -13,6 +13,12 @@
 .sidebar_opt:hover{
     -fx-fill: #2B49B3;
 }
+.sidebar_plus_icon{
+    -fx-fill: #4C4C4E;
+}
+.sidebar_plus_icon:hover{
+    -fx-fill: #2B49B3;
+}
 .menuOption{
     -fx-fill: #4C4C4E;
 }
@@ -50,7 +56,7 @@
     -fx-text-fill: #4a4a4a;
 }
 .transac_settings_button:hover{
-    -fx-background-color: #2B49B3;
+    -fx-background-color: linear-gradient(to right,#1A3384,#2B49B3);
     -fx-background-radius: 5px;
     -fx-text-fill: #FFFFFF;
 }
@@ -58,27 +64,27 @@
     -fx-background-color: transparent;
 }
 .data0.chart-bar{
-    -fx-background-color: #2B49B3;
+    -fx-background-color: linear-gradient(to bottom,#1A3384,#2B49B3);
     -fx-width: 15px;
     -fx-background-radius: 3px 3px 0px 0px;
 }
 .data1.chart-bar{
-    -fx-background-color: #2B49B3;
+    -fx-background-color: linear-gradient(to bottom,#1A3384,#2B49B3);
     -fx-width: 15px;
     -fx-background-radius: 3px 3px 0px 0px;
 }
 .data2.chart-bar{
-    -fx-background-color: #2B49B3;
+    -fx-background-color: linear-gradient(to bottom,#1A3384,#2B49B3);
     -fx-width: 15px;
     -fx-background-radius: 3px 3px 0px 0px;
 }
 .data3.chart-bar{
-    -fx-background-color: #2B49B3;
+    -fx-background-color: linear-gradient(to bottom,#1A3384,#2B49B3);
     -fx-width: 15px;
     -fx-background-radius: 3px 3px 0px 0px;
 }
 .data4.chart-bar{
-    -fx-background-color: #2B49B3;
+    -fx-background-color: linear-gradient(to bottom,#1A3384,#2B49B3);
     -fx-width: 15px;
     -fx-background-radius: 3px 3px 0px 0px;
 }

@@ -1,4 +1,3 @@
-
 package bank.management.dash;
 
 import bank.management.atm.AdminLogin;
@@ -33,68 +32,62 @@ import javafx.scene.shape.Circle;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
 
-public class SettingsController implements Initializable {
+public class AddAdminController implements Initializable {
     boolean popupShowing=false;
     String adminName;
     @FXML
     private AnchorPane navBarAnchor;
     @FXML
-    private FontAwesomeIconView menuIcon,homeIcon,listIcon,imageIcon,settingsIcon,plusBut;
+    private FontAwesomeIconView menuIcon,homeIcon,listIcon,imageIcon,settingsIcon;
     @FXML
     private Circle avatarCircle;
     @FXML
-    private TextField oldPasswordTextField,newPasswordTextField,reNewPassTextField;
+    private VBox headerVBox,addAdminVBox;
     @FXML
-    private VBox changePassVBox,headerVBox,adminInfoVBox;
+    private TextField nameTextField,userIDTextField,passTextField;
     @FXML
-    private Circle avatarCircleMain;
+    private Button createUserBut;
     @FXML
-    private Label AdminNameLabel,adminIdLabel,adminParaLabel,paraLabel,dateLabel;
-    @FXML
-    private Button changePasswordBut;
+    private Label paraLabel,dateLabel;
 
-   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        dateSetter();
         avatarImageFetcher();
+        dateSetter();
         nameFetcher();
-        adminIDFetcher();
-        paraLabel.setWrapText(true);
-        paraLabel.setText("Please create a strong password to protect your account. A strong password should be long (at least 8 characters), complex (include a mix of letters, numbers, and special characters), and unique (not used on any other accounts). Avoid using personal information or common words as part of your password."); 
-        adminParaLabel.setWrapText(true);
-        adminParaLabel.setText("Stay up-to-date with the latest activity and trends by checking the analytics section of the dashboard");
         DropShadow shadowVBox = new DropShadow();
         shadowVBox.setColor(Color.GRAY);
         shadowVBox.setRadius(5);
-        shadowVBox.setOffsetX(3);
+        shadowVBox.setOffsetX(-3);
         shadowVBox.setOffsetY(3);
-        changePassVBox.setEffect(shadowVBox);
-        adminInfoVBox.setEffect(shadowVBox);
-        Color pinkColor = Color.web("#8382ff");
-        DropShadow avatarShadow = new DropShadow();
-        avatarShadow.setColor(pinkColor);
-        avatarShadow.setRadius(16);
-        avatarCircleMain.setEffect(avatarShadow);
-        AdminNameLabel.setText("Name : "+adminName);
-    }   
+        addAdminVBox.setEffect(shadowVBox);
+        paraLabel.setWrapText(true);
+        paraLabel.setText("""
+                          Before adding a new admin to the dashboard, we want to ensure that the chosen individual is fully qualified and prepared for this role. As an admin, they will have access to sensitive information and will be responsible for managing the dashboard and its users.
+                          
+                          We recommend thoroughly reviewing the qualifications and experience of the potential admin before proceeding with their addition. Make sure to also consider their ability to work well with the team and adhere to our policies and procedures.""");
+        int userid = calculateLargestUserID() + 1;
+        userIDTextField.setText(userid+"");
+    } 
     
+
     @FXML
     private void HomeIconClicked(MouseEvent event) {
-        try{
+         try{
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
             Parent root = loader.load();
             
-            Scene homeScene = new Scene(root);
+            Scene dashboardScene = new Scene(root);
             
             Stage stage = (Stage) homeIcon.getScene().getWindow();
-            stage.setScene(homeScene);
+            stage.setScene(dashboardScene);
             
             
         }catch(IOException e){
-            e.printStackTrace();
+            System.out.println(e);
         }
     }
+
     @FXML
     private void listIconClicked(MouseEvent event) {
         try{
@@ -111,6 +104,23 @@ public class SettingsController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private void viewAllTransacFun(MouseEvent event) {
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("viewAllTransactions.fxml"));
+            Parent root = loader.load();
+            
+            Scene viewAllTransacScene = new Scene(root);
+            
+            Stage stage = (Stage) listIcon.getScene().getWindow();
+            stage.setScene(viewAllTransacScene);
+           
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
     @FXML
     private void avatarIconClicked(MouseEvent event) {
         if(!popupShowing){
@@ -156,21 +166,35 @@ public class SettingsController implements Initializable {
             popupShowing = true;
         }
     }
+    @FXML
+    private void settingsClicked(MouseEvent event) {
+         try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("settings.fxml"));
+            Parent root = loader.load();
+            
+            Scene settingsScene = new Scene(root);
+            
+            Stage stage = (Stage) settingsIcon.getScene().getWindow();
+            stage.setScene(settingsScene);
+            
+            
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+    private void avatarImageFetcher() {
+        try{
+            Image avatarImage = new Image(getClass().getResourceAsStream("/icons/sampleAvatar.png"));
+            avatarCircle.setFill(new ImagePattern(avatarImage));
+        }catch(Exception ex){
+            System.out.println(ex);
+        }
+    }
     private void dateSetter() {
         //setting date
         java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd-MMMM-yyyy");
         java.util.Date date = new java.util.Date();
         dateLabel.setText(formatter.format(date));
-    }
-
-    private void avatarImageFetcher() {
-        try{
-            Image avatarImage = new Image(getClass().getResourceAsStream("/icons/sampleAvatar.png"));
-            avatarCircle.setFill(new ImagePattern(avatarImage));
-            avatarCircleMain.setFill(new ImagePattern(avatarImage));
-        }catch(Exception ex){
-            System.out.println(ex);
-        }
     }
     private void nameFetcher(){
        try{
@@ -183,104 +207,78 @@ public class SettingsController implements Initializable {
            System.out.println(ex);
        }   
     }
-
     @FXML
-    private void changePassButClicked(MouseEvent event) {
-        String oldPass = oldPasswordTextField.getText();
-        String newPass = newPasswordTextField.getText();
-        String reNewPass = reNewPassTextField.getText();
-        String dbOldPass;
-        if(!newPass.equals(reNewPass)){
+    private void createUserButClicked(MouseEvent event) {
+        String name = nameTextField.getText();
+        int userid = Integer.parseInt(userIDTextField.getText());
+        String password = passTextField.getText();
+        if(name.equals("")){
             Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Not Same");
-            alert.setHeaderText("Entered passwords dosent match");
+            alert.setTitle("Warning");
+            alert.setHeaderText("Name field cannot be empty!");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                 return;
+                return;
             }
         }
-        if(newPass.length() < 8){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        if(password.length() < 8){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Warning");
-            alert.setHeaderText("Password should contain atleast 8 characters");
+            alert.setHeaderText("Password should contain atleast 8 characters!");
             Optional<ButtonType> result = alert.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                 return;
+                return;
             }
         }
         try{
             Conn conn = new Conn();
-            ResultSet rs = conn.s.executeQuery("select password from adminlogin where name='"+adminName+"'");
-            rs.next();
-            dbOldPass = rs.getString("password");
-            System.out.println(dbOldPass);
-            if(dbOldPass.equals(oldPass)){
-                conn.s.executeUpdate("UPDATE adminlogin set password='"+newPass+"' where name='"+adminName+"'");
-                oldPasswordTextField.setText("");
-                newPasswordTextField.setText("");
-                reNewPassTextField.setText("");
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("Info");
-                alert.setHeaderText("Password changed successfully");
+            ResultSet rs = conn.s.executeQuery("select userid from adminlogin where name='"+name+"'");
+            if(rs.next()){
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Warning");
+                alert.setHeaderText("User already exist!");
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK) {
                     return;
                 }
             }else{
-                Alert alert = new Alert(Alert.AlertType.WARNING);
-                alert.setTitle("Not Same");
-                alert.setHeaderText("Old Password is incorrect");
+                conn.s.executeUpdate("insert into adminlogin values('"+userid+"','"+name+"','"+password+"');");
+                nameTextField.setText("");
+                userIDTextField.setText("");
+                passTextField.setText("");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Information");
+                alert.setHeaderText("User added successfully!");
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK) {
-                    return;
+                    try{
+                        FXMLLoader loader = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
+                        Parent root = loader.load();
+                        Scene dashboardScene = new Scene(root);
+                        Stage stage = (Stage) homeIcon.getScene().getWindow();
+                        stage.setScene(dashboardScene);
+                    }catch(IOException e){
+                        System.out.println(e);
+                    }
                 }
             }
         }catch(SQLException ex){
             System.out.println(ex);
         }
+        
     }
 
-    @FXML
-    private void viewAllTransacFun(MouseEvent event) {
-        try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("viewAllTransactions.fxml"));
-            Parent root = loader.load();
-            
-            Scene viewAllTransacScene = new Scene(root);
-            
-            Stage stage = (Stage) listIcon.getScene().getWindow();
-            stage.setScene(viewAllTransacScene);
-           
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    private void adminIDFetcher() {
+    private int calculateLargestUserID() {
+        int userid=2022000;
         try{
             Conn conn = new Conn();
-            ResultSet rs = conn.s.executeQuery("select userid from adminlogin where name='"+adminName+"'");
+            ResultSet rs = conn.s.executeQuery("select max(userid) from adminlogin;");
             rs.next();
-            adminIdLabel.setText("ID : "+rs.getInt("userid"));
+            userid = rs.getInt(1);
         }catch(SQLException ex){
             System.out.println(ex);
         }
+        return userid;
     }
-    @FXML
-    private void plusButClicked(MouseEvent event) {
-        try{
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddAdmin.fxml"));
-            Parent root = loader.load();
-            
-            Scene addUserScene = new Scene(root);
-            
-            Stage stage = (Stage) plusBut.getScene().getWindow();
-            stage.setScene(addUserScene);
-            
-            
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-    }
-
+    
 }

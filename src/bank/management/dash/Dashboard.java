@@ -20,6 +20,7 @@ public class Dashboard extends Application{
        primaryStage.setResizable(false);
        primaryStage.initStyle(StageStyle.DECORATED);
        primaryStage.show();
+       primaryStage.setOnCloseRequest(event -> System.exit(0));
        
     }
     public static void main(String[] args){

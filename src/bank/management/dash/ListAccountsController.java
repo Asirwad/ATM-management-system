@@ -58,6 +58,8 @@ public class ListAccountsController implements Initializable {
     private TableColumn<AccountsModel, Double> balance;
     @FXML
     private TableView<AccountsModel> accountsTableView;
+    @FXML
+    private FontAwesomeIconView plusBut;
 
     /**
      * Initializes the controller class.
@@ -157,35 +159,35 @@ public class ListAccountsController implements Initializable {
        
         cardNumber.setCellValueFactory(new PropertyValueFactory<>("cardNumber"));
         Label cardNumLabel = new Label("Card Number");
-        cardNumLabel.setStyle("-fx-background-color: #2B49B3; -fx-text-fill: white;");
+        cardNumLabel.setStyle("-fx-background-color: linear-gradient(to right,#1A3384,#2B49B3); -fx-text-fill: white;");
         cardNumLabel.setMaxWidth(Double.MAX_VALUE);
         cardNumLabel.setMaxHeight(Double.MAX_VALUE);
         cardNumber.setGraphic(cardNumLabel);
         
         accountType.setCellValueFactory(new PropertyValueFactory<>("accountType"));
         Label accountTypeLabel = new Label("Account type");
-        accountTypeLabel.setStyle("-fx-background-color: #2B49B3; -fx-text-fill: white;");
+        accountTypeLabel.setStyle("-fx-background-color: linear-gradient(to right,#1A3384,#2B49B3); -fx-text-fill: white;");
         accountTypeLabel.setMaxWidth(Double.MAX_VALUE);
         accountTypeLabel.setMaxHeight(Double.MAX_VALUE);
         accountType.setGraphic(accountTypeLabel);
         
         fName.setCellValueFactory(new PropertyValueFactory<>("fName"));
         Label fNameLabel = new Label("Name");
-        fNameLabel.setStyle("-fx-background-color: #2B49B3; -fx-text-fill: white;");
+        fNameLabel.setStyle("-fx-background-color: linear-gradient(to right,#1A3384,#2B49B3); -fx-text-fill: white;");
         fNameLabel.setMaxWidth(Double.MAX_VALUE);
         fNameLabel.setMaxHeight(Double.MAX_VALUE);
         fName.setGraphic(fNameLabel);
         
         lName.setCellValueFactory(new PropertyValueFactory<>("lName"));
         Label lNameLabel = new Label("Father's Name");
-        lNameLabel.setStyle("-fx-background-color: #2B49B3; -fx-text-fill: white;");
+        lNameLabel.setStyle("-fx-background-color: linear-gradient(to right,#1A3384,#2B49B3); -fx-text-fill: white;");
         lNameLabel.setMaxWidth(Double.MAX_VALUE);
         lNameLabel.setMaxHeight(Double.MAX_VALUE);
         lName.setGraphic(lNameLabel);
         
         balance.setCellValueFactory(new PropertyValueFactory<>("balance"));
         Label balanceLabel = new Label("Balance");
-        balanceLabel.setStyle("-fx-background-color: #2B49B3; -fx-text-fill: white;");
+        balanceLabel.setStyle("-fx-background-color: linear-gradient(to right,#1A3384,#2B49B3); -fx-text-fill: white;");
         balanceLabel.setMaxWidth(Double.MAX_VALUE);
         balanceLabel.setMaxHeight(Double.MAX_VALUE);
         balance.setGraphic(balanceLabel);
@@ -241,6 +243,22 @@ public class ListAccountsController implements Initializable {
             Stage stage = (Stage) listIcon.getScene().getWindow();
             stage.setScene(viewAllTransacScene);
            
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    private void plusButClicked(MouseEvent event) {
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddAdmin.fxml"));
+            Parent root = loader.load();
+            
+            Scene addUserScene = new Scene(root);
+            
+            Stage stage = (Stage) plusBut.getScene().getWindow();
+            stage.setScene(addUserScene);
+            
+            
         }catch(IOException e){
             e.printStackTrace();
         }

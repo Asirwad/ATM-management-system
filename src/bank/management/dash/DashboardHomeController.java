@@ -40,7 +40,7 @@ public class DashboardHomeController implements Initializable {
     @FXML
     private BarChart<String, Double> chart;
     @FXML
-    private FontAwesomeIconView homeIcon,listIcon,imageIcon,settingsIcon,menuIcon;
+    private FontAwesomeIconView homeIcon,listIcon,imageIcon,settingsIcon,menuIcon,plusBut;
     @FXML
     private Button viewAllTransacBut,settingsBut;
     @FXML
@@ -51,6 +51,7 @@ public class DashboardHomeController implements Initializable {
     private AnchorPane bottomAnchor;
     @FXML
     private Label welcomeLabel;
+   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //listIcon.setGlyphStyle("-fx-fill: #C1C1C1;");
@@ -242,6 +243,23 @@ public class DashboardHomeController implements Initializable {
             
             Stage stage = (Stage) settingsIcon.getScene().getWindow();
             stage.setScene(settingsScene);
+            
+            
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void plusButClicked(MouseEvent event) {
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("AddAdmin.fxml"));
+            Parent root = loader.load();
+            
+            Scene addUserScene = new Scene(root);
+            
+            Stage stage = (Stage) plusBut.getScene().getWindow();
+            stage.setScene(addUserScene);
             
             
         }catch(IOException e){
