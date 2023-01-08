@@ -1,6 +1,7 @@
 
 package bank.management.dash;
 
+import bank.management.dash.DataModels.TransactionModel;
 import java.sql.*;
 import bank.management.atm.AdminLogin;
 import bank.management.atm.Conn;

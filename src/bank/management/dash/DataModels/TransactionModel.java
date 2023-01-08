@@ -1,4 +1,4 @@
-package bank.management.dash;
+package bank.management.dash.DataModels;
 
 public class TransactionModel {
     private String cardNumber;
