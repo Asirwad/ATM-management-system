@@ -1,10 +1,10 @@
 package bank.management.dash;
 
-import java.util.List;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -12,6 +12,8 @@ public class Dashboard extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception{
        
+       Image icon = new Image("C:\\Users\\asirw\\OneDrive\\Documents\\NetBeansProjects\\bank management system\\src\\icons\\bankIcon.png");
+       primaryStage.getIcons().add(icon);
        Parent root = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
        Scene scene = new Scene(root);
        primaryStage.setScene(scene);

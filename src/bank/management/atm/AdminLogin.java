@@ -154,23 +154,23 @@ public class AdminLogin extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent ae){
         if(ae.getSource() == signInBut){
-            String adminName = null;
             Conn conn = new Conn();
             String password = passwordText.getText();
             String userid = useridText.getText();
             String query = "select name from adminlogin where userid = '"+userid+"' and password = '"+password+"';";
             try{
                 ResultSet rs = conn.s.executeQuery(query);
-                rs.next();
-                adminName = rs.getString("name");
                 if(userid.equals(""))
                     JOptionPane.showMessageDialog(null,"Please enter the userid");
                 else if(password.equals(""))
                     JOptionPane.showMessageDialog(null,"Please enter a password");
-                else if(adminName != null){
+                else if(rs.next()){
                     setVisible(false);
+                    System.out.println(rs.getString("name"));
+                    //System.out.println(rs.getInt("userid"));
+                    conn.s.executeUpdate("insert into adminLoginRecord values('"+rs.getString("name")+"');");
                     //admin dashboard object here
-                    Application.launch(Dashboard.class,adminName);
+                    Application.launch(Dashboard.class,"");
                 }else{
                     JOptionPane.showMessageDialog(null,"Invalid Crediantals");
                 }

@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
- */
+
 package bank.management.dash;
 
 import java.sql.*;
@@ -45,6 +42,7 @@ import javafx.stage.Stage;
  */
 public class ViewAllTransactionsController implements Initializable {
     boolean popupShowing=false;
+    String adminName;
     @FXML
     private AnchorPane navBarAnchor;
     @FXML
@@ -71,6 +69,8 @@ public class ViewAllTransactionsController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         transacTableFetcher();
         avatarImageFetcher();
+        dateSetter();
+        nameFetcher();
     }    
 
     @FXML
@@ -100,8 +100,8 @@ public class ViewAllTransactionsController implements Initializable {
             
             avatarCircle.setRadius(20);
             Popup popup = new Popup();
-            Label label = new Label("User: John Doe");
-            label.setStyle("-fx-font-size: 14pt; -fx-text-fill: 4C4C4E;");
+            Label label = new Label("    @"+adminName);
+            label.setStyle("-fx-font-size: 14pt; -fx-text-fill: 4C4C4E; -fx-font-weight: bold;");
             
             Button logoutButton = new Button("Logout");
             logoutButton.setId("logoutButton");
@@ -197,10 +197,45 @@ public class ViewAllTransactionsController implements Initializable {
     }
      private void avatarImageFetcher() {
         try{
-            Image avatarImage = new Image(getClass().getResourceAsStream("/icons/xav.jpg"));
+            Image avatarImage = new Image(getClass().getResourceAsStream("/icons/sampleAvatar.png"));
             avatarCircle.setFill(new ImagePattern(avatarImage));
         }catch(Exception ex){
             System.out.println(ex);
+        }
+    }
+
+    private void dateSetter() {
+        //setting date
+        java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd-MMMM-yyyy");
+        java.util.Date date = new java.util.Date();
+        dateLabel.setText(formatter.format(date));
+    }
+    private void nameFetcher(){
+       try{
+            Conn conn = new Conn();
+            String query = "select name from adminLoginRecord;";
+            ResultSet rs = conn.s.executeQuery(query);
+            while(rs.next())
+                adminName =  rs.getString("name");
+       }catch(SQLException ex){
+           System.out.println(ex);
+       }   
+    }
+
+    @FXML
+    private void settingsClicked(MouseEvent event) {
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("settings.fxml"));
+            Parent root = loader.load();
+            
+            Scene settingsScene = new Scene(root);
+            
+            Stage stage = (Stage) settingsIcon.getScene().getWindow();
+            stage.setScene(settingsScene);
+            
+            
+        }catch(IOException e){
+            e.printStackTrace();
         }
     }
 }

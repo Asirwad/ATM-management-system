@@ -34,6 +34,7 @@ import javafx.stage.Stage;
 
 public class DashboardHomeController implements Initializable {
     boolean popupShowing = false; 
+    String adminName;
     @FXML
     private Circle avatarCircle;
     @FXML
@@ -45,12 +46,17 @@ public class DashboardHomeController implements Initializable {
     @FXML
     private AnchorPane navBarAnchor;
     @FXML
-    private Label dateLabel,incomeLabel,expenseLabel,dateLabelFooter;
+    private Label dateLabel,incomeLabel,expenseLabel,dateLabelFooter,collectedLabel,transferredLabel;
     @FXML
     private AnchorPane bottomAnchor;
+    @FXML
+    private Label welcomeLabel;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        //listIcon.setGlyphStyle("-fx-fill: #C1C1C1;");
+        //homeIcon.setGlyphStyle("-fx-fill: #2B49B3;");
+        nameFetcher();
+        welcomeLabel.setText("Hello "+adminName+", welcome back!");
         incomeAndExpense();
         dateCalculator();
         avatarImageFetcher();
@@ -101,8 +107,8 @@ public class DashboardHomeController implements Initializable {
             
             avatarCircle.setRadius(20);
             Popup popup = new Popup();
-            Label label = new Label("User: John Doe");
-            label.setStyle("-fx-font-size: 14pt; -fx-text-fill: 4C4C4E;");
+            Label adminNameLabel = new Label("    @"+adminName);
+            adminNameLabel.setStyle("-fx-font-size: 14pt; -fx-text-fill: 4C4C4E; -fx-font-weight: bold;");
             
             Button logoutButton = new Button("Logout");
             logoutButton.setId("logoutButton");
@@ -119,7 +125,7 @@ public class DashboardHomeController implements Initializable {
             });
             
 
-            VBox avatarCirclelayout = new VBox(label, logoutButton);
+            VBox avatarCirclelayout = new VBox(adminNameLabel, logoutButton);
             avatarCirclelayout.setPadding(new Insets(10));
             avatarCirclelayout.setStyle("-fx-background-color: rgba(255, 255, 255, 0.85); "
                 + "-fx-border-color: white; "
@@ -146,21 +152,23 @@ public class DashboardHomeController implements Initializable {
             while(rsDeposit.next()){
                 totalAmount+=rsDeposit.getInt("amount");
             }
-            incomeLabel.setText("₹"+totalAmount);
+            collectedLabel.setText("₹"+totalAmount);
+            incomeLabel.setText("₹"+(totalAmount/50));
             ResultSet rsWithdraw = conn.s.executeQuery("select amount from bank where type='Withdrawl';");
             rsWithdraw.next();
             totalAmount=0;
             while(rsWithdraw.next()){
                 totalAmount+=rsWithdraw.getInt("amount");
             }
-            expenseLabel.setText("₹"+totalAmount);
+            transferredLabel.setText("₹"+totalAmount);
+            expenseLabel.setText("₹"+(totalAmount-(totalAmount/50)));
         }catch(SQLException ex){
             //do nothing
         }
     }
 
     private void dateCalculator() {
-        java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd-MMM-yyyy");
+        java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd-MMMM-yyyy");
         java.util.Date date = new java.util.Date();
         dateLabel.setText(formatter.format(date));
         dateLabelFooter.setText(formatter.format(date));
@@ -168,7 +176,7 @@ public class DashboardHomeController implements Initializable {
 
     private void avatarImageFetcher() {
         try{
-            Image avatarImage = new Image(getClass().getResourceAsStream("/icons/xav.jpg"));
+            Image avatarImage = new Image(getClass().getResourceAsStream("/icons/sampleAvatar.png"));
             avatarCircle.setFill(new ImagePattern(avatarImage));
         }catch(Exception ex){
             System.out.println(ex);
@@ -210,6 +218,35 @@ public class DashboardHomeController implements Initializable {
         series_01.getData().add(new XYChart.Data("RD", totalRDAmount));
         series_01.getData().add(new XYChart.Data("Current", totalCurrentAmount));
         chart.getData().add(series_01);
+    }
+
+    private void nameFetcher(){
+       try{
+            Conn conn = new Conn();
+            String query = "select name from adminLoginRecord;";
+            ResultSet rs = conn.s.executeQuery(query);
+            while(rs.next())
+                adminName =  rs.getString("name");
+       }catch(SQLException ex){
+           System.out.println(ex);
+       }   
+    }
+
+    @FXML
+    private void settingsClicked(MouseEvent event) {
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("settings.fxml"));
+            Parent root = loader.load();
+            
+            Scene settingsScene = new Scene(root);
+            
+            Stage stage = (Stage) settingsIcon.getScene().getWindow();
+            stage.setScene(settingsScene);
+            
+            
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
     
 }

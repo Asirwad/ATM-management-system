@@ -1,12 +1,17 @@
 package bank.management.dash;
 
 import bank.management.atm.AdminLogin;
+import bank.management.atm.Conn;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -17,6 +22,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -27,7 +35,7 @@ import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 public class ListAccountsController implements Initializable {
-
+    String adminName;
     boolean popupShowing;
     @FXML
     private AnchorPane navBarAnchor;
@@ -37,23 +45,30 @@ public class ListAccountsController implements Initializable {
     private Circle avatarCircle;
     @FXML
     private Label dateLabel;
+    @FXML
+    private TableColumn<AccountsModel, String> cardNumber;
+    @FXML
+    private TableColumn<AccountsModel, String> accountType;
+    @FXML
+    private TableColumn<AccountsModel, String> fName;
+    @FXML
+    private TableColumn<AccountsModel, String> lName;
+    @FXML
+    private TableColumn<AccountsModel, Double> balance;
+    @FXML
+    private TableView<AccountsModel> accountsTableView;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
-        //setting date
-        java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd-MMM-yyyy");
-        java.util.Date date = new java.util.Date();
-        dateLabel.setText(formatter.format(date));
-        try{
-            Image avatarImage = new Image(getClass().getResourceAsStream("/icons/xav.jpg"));
-            avatarCircle.setFill(new ImagePattern(avatarImage));
-        }catch(Exception ex){
-            System.out.println(ex);
-        }
+        //homeIcon.setGlyphStyle("-fx-fill: #C1C1C1;");
+        //listIcon.setGlyphStyle("-fx-fill: #2B49B3;");
+        accountsTableFetcher();
+        dateSetter();
+        avatarImageFetcher();
+        nameFetcher();
     }    
     
     @FXML
@@ -83,8 +98,8 @@ public class ListAccountsController implements Initializable {
             
             avatarCircle.setRadius(20);
             Popup popup = new Popup();
-            Label label = new Label("User: John Doe");
-            label.setStyle("-fx-font-size: 14pt; -fx-text-fill: 4C4C4E;");
+            Label label = new Label("    @"+adminName);
+            label.setStyle("-fx-font-size: 14pt; -fx-text-fill: 4C4C4E; -fx-font-weight: bold;");
             
             Button logoutButton = new Button("Logout");
             logoutButton.setId("logoutButton");
@@ -118,6 +133,115 @@ public class ListAccountsController implements Initializable {
             popupShowing = true;
         }
     }
-    
-    
+    private void dateSetter() {
+        //setting date
+        java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd-MMMM-yyyy");
+        java.util.Date date = new java.util.Date();
+        dateLabel.setText(formatter.format(date));
+    }
+
+    private void avatarImageFetcher() {
+        try{
+            Image avatarImage = new Image(getClass().getResourceAsStream("/icons/sampleAvatar.png"));
+            avatarCircle.setFill(new ImagePattern(avatarImage));
+        }catch(Exception ex){
+            System.out.println(ex);
+        }
+    }
+
+    private void accountsTableFetcher() {
+        ObservableList<AccountsModel> data = FXCollections.observableArrayList();
+        accountsTableView.setItems(data);
+        accountsTableView.setStyle("-fx-border-color: transparent;");
+       
+        cardNumber.setCellValueFactory(new PropertyValueFactory<>("cardNumber"));
+        Label cardNumLabel = new Label("Card Number");
+        cardNumLabel.setStyle("-fx-background-color: #2B49B3; -fx-text-fill: white;");
+        cardNumLabel.setMaxWidth(Double.MAX_VALUE);
+        cardNumLabel.setMaxHeight(Double.MAX_VALUE);
+        cardNumber.setGraphic(cardNumLabel);
+        
+        accountType.setCellValueFactory(new PropertyValueFactory<>("accountType"));
+        Label accountTypeLabel = new Label("Account type");
+        accountTypeLabel.setStyle("-fx-background-color: #2B49B3; -fx-text-fill: white;");
+        accountTypeLabel.setMaxWidth(Double.MAX_VALUE);
+        accountTypeLabel.setMaxHeight(Double.MAX_VALUE);
+        accountType.setGraphic(accountTypeLabel);
+        
+        fName.setCellValueFactory(new PropertyValueFactory<>("fName"));
+        Label fNameLabel = new Label("Name");
+        fNameLabel.setStyle("-fx-background-color: #2B49B3; -fx-text-fill: white;");
+        fNameLabel.setMaxWidth(Double.MAX_VALUE);
+        fNameLabel.setMaxHeight(Double.MAX_VALUE);
+        fName.setGraphic(fNameLabel);
+        
+        lName.setCellValueFactory(new PropertyValueFactory<>("lName"));
+        Label lNameLabel = new Label("Father's Name");
+        lNameLabel.setStyle("-fx-background-color: #2B49B3; -fx-text-fill: white;");
+        lNameLabel.setMaxWidth(Double.MAX_VALUE);
+        lNameLabel.setMaxHeight(Double.MAX_VALUE);
+        lName.setGraphic(lNameLabel);
+        
+        balance.setCellValueFactory(new PropertyValueFactory<>("balance"));
+        Label balanceLabel = new Label("Balance");
+        balanceLabel.setStyle("-fx-background-color: #2B49B3; -fx-text-fill: white;");
+        balanceLabel.setMaxWidth(Double.MAX_VALUE);
+        balanceLabel.setMaxHeight(Double.MAX_VALUE);
+        balance.setGraphic(balanceLabel);
+        
+        try{
+            Conn conn = new Conn();
+            String query = "select signupthree.cardNumber,signupthree.accountType,signup.name,signup.father_name,account.balance from signup join account join signupthree where signupthree.formno=signup.formno AND signupthree.cardNumber=account.cardno;";
+            ResultSet rs = conn.s.executeQuery(query);
+            while(rs.next()){
+                data.add(new AccountsModel(rs.getString("cardNumber"),rs.getString("accountType"),rs.getString("name"),rs.getString("father_name"),rs.getInt("balance")));
+            }
+        }catch(SQLException ex){
+            System.out.println(ex);
+        }
+    }
+    private void nameFetcher(){
+       try{
+            Conn conn = new Conn();
+            String query = "select name from adminLoginRecord;";
+            ResultSet rs = conn.s.executeQuery(query);
+            while(rs.next())
+                adminName =  rs.getString("name");
+       }catch(SQLException ex){
+           System.out.println(ex);
+       }   
+    }
+
+    @FXML
+    private void settingsClicked(MouseEvent event) {
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("settings.fxml"));
+            Parent root = loader.load();
+            
+            Scene settingsScene = new Scene(root);
+            
+            Stage stage = (Stage) settingsIcon.getScene().getWindow();
+            stage.setScene(settingsScene);
+            
+            
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void viewAllTransacFun(MouseEvent event) {
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("viewAllTransactions.fxml"));
+            Parent root = loader.load();
+            
+            Scene viewAllTransacScene = new Scene(root);
+            
+            Stage stage = (Stage) listIcon.getScene().getWindow();
+            stage.setScene(viewAllTransacScene);
+           
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
 }
