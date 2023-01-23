@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,6 +35,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class ListAccountsController implements Initializable {
     String adminName;
@@ -101,25 +103,33 @@ public class ListAccountsController implements Initializable {
             
             avatarCircle.setRadius(20);
             Popup popup = new Popup();
-            Label label = new Label("    @"+adminName);
-            label.setStyle("-fx-font-size: 14pt; -fx-text-fill: 4C4C4E; -fx-font-weight: bold;");
+            Label adminNameLabel = new Label("    @"+adminName);
+            adminNameLabel.setStyle("-fx-font-size: 14pt; -fx-text-fill: 4C4C4E; -fx-font-weight: bold;");
+            
+            
             
             Button logoutButton = new Button("Logout");
             logoutButton.setId("logoutButton");
             logoutButton.getStyleClass().add("logoutButton");
+            
+            TranslateTransition transition = new TranslateTransition(Duration.millis(50), logoutButton);
+            transition.setByY(-3);
+            
             logoutButton.setOnMouseClicked((MouseEvent event2) -> {
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Confirm Exit");
                 alert.setHeaderText("Are you sure you want to exit?");
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK) {
-                    Platform.exit();
+                    System.exit(0);
                     new AdminLogin().setVisible(true);
                 }
             });
+            logoutButton.setOnMousePressed(e -> transition.playFromStart());
+            logoutButton.setOnMouseReleased(e -> transition.stop());
             
 
-            VBox avatarCirclelayout = new VBox(label, logoutButton);
+            VBox avatarCirclelayout = new VBox(adminNameLabel, logoutButton);
             avatarCirclelayout.setPadding(new Insets(10));
             avatarCirclelayout.setStyle("-fx-background-color: rgba(255, 255, 255, 0.85); "
                 + "-fx-border-color: white; "

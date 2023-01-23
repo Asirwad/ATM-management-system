@@ -6,9 +6,15 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+//import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import javafx.application.Platform;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -30,6 +36,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 
 public class DashboardHomeController implements Initializable {
@@ -51,6 +58,7 @@ public class DashboardHomeController implements Initializable {
     private AnchorPane bottomAnchor;
     @FXML
     private Label welcomeLabel;
+    
    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -61,7 +69,8 @@ public class DashboardHomeController implements Initializable {
         incomeAndExpense();
         dateCalculator();
         avatarImageFetcher();
-        barChartCalculator(); 
+        barChartCalculator();
+        addviewAllTransacAndsettingsButAnimations();
     }   
 
     @FXML
@@ -111,19 +120,27 @@ public class DashboardHomeController implements Initializable {
             Label adminNameLabel = new Label("    @"+adminName);
             adminNameLabel.setStyle("-fx-font-size: 14pt; -fx-text-fill: 4C4C4E; -fx-font-weight: bold;");
             
+            
+            
             Button logoutButton = new Button("Logout");
             logoutButton.setId("logoutButton");
             logoutButton.getStyleClass().add("logoutButton");
+            
+            TranslateTransition transition = new TranslateTransition(Duration.millis(50), logoutButton);
+            transition.setByY(-3);
+            
             logoutButton.setOnMouseClicked((MouseEvent event2) -> {
                 Alert alert = new Alert(AlertType.CONFIRMATION);
                 alert.setTitle("Confirm Exit");
                 alert.setHeaderText("Are you sure you want to exit?");
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK) {
-                    Platform.exit();
+                    System.exit(0);
                     new AdminLogin().setVisible(true);
                 }
             });
+            logoutButton.setOnMousePressed(e -> transition.playFromStart());
+            logoutButton.setOnMouseReleased(e -> transition.stop());
             
 
             VBox avatarCirclelayout = new VBox(adminNameLabel, logoutButton);
@@ -265,6 +282,18 @@ public class DashboardHomeController implements Initializable {
         }catch(IOException e){
             e.printStackTrace();
         }
+    }
+
+    private void addviewAllTransacAndsettingsButAnimations() {
+        TranslateTransition viewAllTransacTransition = new TranslateTransition(Duration.millis(50), viewAllTransacBut);
+        viewAllTransacTransition.setByY(-3);
+        viewAllTransacBut.setOnMousePressed(e -> viewAllTransacTransition.playFromStart());
+        viewAllTransacBut.setOnMouseReleased(e -> viewAllTransacTransition.stop());
+        
+        TranslateTransition settingsButTransition = new TranslateTransition(Duration.millis(50), settingsBut);
+        settingsButTransition.setByY(-3);
+        settingsBut.setOnMousePressed(e -> settingsButTransition.playFromStart());
+        settingsBut.setOnMouseReleased(e -> settingsButTransition.stop());
     }
     
 }

@@ -22,6 +22,7 @@
  -fx-touch-action: manipulation;
  -fx-white-space: nowrap;
  -fx-transition: all .3s;
+ -fx-position: relative;
 }
 .logoutButton:active,
 .logoutButton:hover {
@@ -42,6 +43,9 @@
 }
 .logoutButton:active {
  -fx-scale: 0.9;
+}
+.logoutButton:pressed {
+    -fx-background-radius:20 20 20 20;
 }
 
 

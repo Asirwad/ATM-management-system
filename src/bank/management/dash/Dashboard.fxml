@@ -317,7 +317,7 @@
                         </DropShadow>
                      </effect>
                   </Button>
-                  <Button fx:id="settingsBut" layoutX="735.0" layoutY="158.0" mnemonicParsing="false" onMouseClicked="#settingsClicked" prefWidth="150.0" styleClass="transac_settings_button" text="Settings" AnchorPane.bottomAnchor="112.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="158.0">
+                  <Button fx:id="settingsBut" layoutX="735.0" layoutY="161.0" mnemonicParsing="false" onMouseClicked="#settingsClicked" prefWidth="150.0" styleClass="transac_settings_button" text="Settings" AnchorPane.bottomAnchor="109.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="161.0">
                      <font>
                         <Font name="Calibri Bold" size="13.0" />
                      </font>
