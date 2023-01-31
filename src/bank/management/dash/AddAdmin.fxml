@@ -19,7 +19,7 @@
    <left>
       <AnchorPane fx:id="navBarAnchor" prefHeight="200.0" prefWidth="45.0" styleClass="sidebar" BorderPane.alignment="CENTER">
          <children>
-            <FontAwesomeIconView fx:id="menuIcon" fill="#4c4c4e" glyphName="BARS" layoutX="17.0" layoutY="25.0" onMouseClicked="#HomeIconClicked" size="1.5em" text="" AnchorPane.leftAnchor="14.5" AnchorPane.rightAnchor="14.5" AnchorPane.topAnchor="15.0" />
+            <FontAwesomeIconView fx:id="menuIcon" fill="#4c4c4e" glyphName="BARS" layoutX="17.0" layoutY="25.0" onMouseClicked="#HomeIconClicked" size="1.5em" styleClass="menuOption" text="" AnchorPane.leftAnchor="14.5" AnchorPane.rightAnchor="14.5" AnchorPane.topAnchor="15.0" />
             <VBox layoutX="13.0" layoutY="216.0">
                <children>
                   <FontAwesomeIconView fx:id="homeIcon" fill="#2b49b3" glyphName="HOME" onMouseClicked="#HomeIconClicked" size="1.5em" />

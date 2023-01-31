@@ -48,7 +48,7 @@ public class MiniStatement extends JFrame{
         }
         
         try{
-            ResultSet rs = conn.s.executeQuery("select * from bank where cardno = '"+cardNo+"' order by date desc;");
+            ResultSet rs = conn.s.executeQuery("select * from bank where cardno = '"+cardNo+"' order by date asc;");
             int i=10;
             while(rs.next() && i-->0){
                 statement.setText(statement.getText() + "<html>" + rs.getString("date") +"&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + rs.getString("type") + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + rs.getString("amount") + "<br><br><html>");

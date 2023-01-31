@@ -17,7 +17,7 @@
    <left>
       <AnchorPane fx:id="navBarAnchor" prefHeight="200.0" prefWidth="45.0" styleClass="sidebar" BorderPane.alignment="CENTER">
          <children>
-            <FontAwesomeIconView fx:id="menuIcon" fill="#4c4c4e" glyphName="BARS" layoutX="17.0" layoutY="25.0" onMouseClicked="#HomeIconClicked" size="1.5em" text="" AnchorPane.leftAnchor="14.5" AnchorPane.rightAnchor="14.5" AnchorPane.topAnchor="15.0" />
+            <FontAwesomeIconView fx:id="menuIcon" fill="#4c4c4e" glyphName="BARS" layoutX="17.0" layoutY="25.0" onMouseClicked="#HomeIconClicked" size="1.5em" styleClass="menuOption" text="" AnchorPane.leftAnchor="14.5" AnchorPane.rightAnchor="14.5" AnchorPane.topAnchor="15.0" />
             <VBox layoutX="13.0" layoutY="216.0">
                <children>
                   <FontAwesomeIconView fx:id="homeIcon" fill="#2b49b3" glyphName="HOME" onMouseClicked="#HomeIconClicked" size="1.5em" />
@@ -85,7 +85,7 @@
                   </HBox>
                </children>
             </VBox>
-            <TableView fx:id="accountsTableView" editable="true" layoutX="40.0" layoutY="76.0" prefHeight="501.0" prefWidth="897.0">
+            <TableView fx:id="accountsTableView" editable="true" layoutX="40.0" layoutY="76.0" prefHeight="504.0" prefWidth="897.0">
               <columns>
                 <TableColumn fx:id="cardNumber" prefWidth="268.0" />
                 <TableColumn fx:id="accountType" prefWidth="160.00006103515625" />

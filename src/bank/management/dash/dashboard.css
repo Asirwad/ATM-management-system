@@ -1,7 +1,6 @@
 .parent{
     -fx-background-color: #FFFFFF;
     -fx-background-radius: 30px;
-
 }
 .sidebar{
     -fx-background-color: #FFFFFF;
@@ -17,7 +16,7 @@
     -fx-fill: #4C4C4E;
 }
 .sidebar_plus_icon:hover{
-    -fx-fill: #2B49B3;
+    -fx-fill: #289a48;
 }
 .menuOption{
     -fx-fill: #4C4C4E;
@@ -93,4 +92,51 @@
 }
 .navExpanding{
     -fx-background-color: #C1C1C1;
+}
+.adminVBox {
+  -fx-box-sizing: border-box;
+  -fx-pref-height: 254px;
+  -fx-background-color: rgba(217, 217, 217, 0.58);
+  -fx-border-color: white;
+  -fx-border-radius: 17px;
+  -fx-text-alignment: center;
+  -fx-cursor: hand;
+  -fx-transition: all 0.5s;
+  -fx-display: flex;
+  -fx-align-items: center;
+  -fx-justify-content: center;
+  -fx-user-select: none;
+  -fx-font-weight: bolder;
+}
+
+.adminVBox:hover {
+  -fx-border-color: linear-gradient(to bottom,#1A3384,#2B49B3);
+  -fx-scale-x: 1.05;
+  -fx-scale-y: 1.05;
+}
+
+.adminVBox:pressed {
+  -fx-scale-x: 0.95;
+  -fx-scale-y: 0.95;
+  -fx-rotate: 1.7;
+}
+.remove_button{
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 5px;
+    -fx-text-fill: #4a4a4a;
+}
+.remove_button:hover{
+    -fx-background-color: linear-gradient(to right,#db3434,#fe0000);
+    -fx-background-radius: 5px;
+    -fx-text-fill: #FFFFFF;
+}
+.checkBox .box {
+-fx-background-color: transparent;
+-fx-border-width: 2px;
+-fx-border-color: linear-gradient(to right,#1A3384,#2B49B3);
+-fx-border-radius: 2px;
+-fx-background-radius: 0;
+-fx-background-insets: 0;
+-fx-padding: 0;
+-fx-fill: white;
 }

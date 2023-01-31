@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.animation.RotateTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -21,12 +22,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -47,13 +50,31 @@ public class SettingsController implements Initializable {
     @FXML
     private TextField oldPasswordTextField,newPasswordTextField,reNewPassTextField;
     @FXML
-    private VBox changePassVBox,headerVBox,adminInfoVBox;
+    private VBox changePassVBox,headerVBox,adminInfoVBox,removeUsersVBox;
     @FXML
     private Circle avatarCircleMain;
     @FXML
     private Label AdminNameLabel,adminIdLabel,adminParaLabel,paraLabel,dateLabel;
     @FXML
     private Button changePasswordBut;
+    @FXML
+    private StackPane rmUserStackPane;
+    @FXML
+    private VBox rmUserVBoxOne;
+    @FXML
+    private Button proceedBut;
+    @FXML
+    private VBox rmUserVBoxTwo;
+    @FXML
+    private TextField userIdTextField;
+    @FXML
+    private CheckBox rmUserCheckBox;
+    @FXML
+    private Button removeBut;
+    @FXML
+    private Button backBut;
+    
+    DropShadow shadowVBoxBlue,shadowVBox;
 
    
     @Override
@@ -62,21 +83,19 @@ public class SettingsController implements Initializable {
         avatarImageFetcher();
         nameFetcher();
         adminIDFetcher();
+        VBoxEffectsInit();
         paraLabel.setWrapText(true);
         paraLabel.setText("Please create a strong password to protect your account. A strong password should be long (at least 8 characters), complex (include a mix of letters, numbers, and special characters), and unique (not used on any other accounts). Avoid using personal information or common words as part of your password."); 
         adminParaLabel.setWrapText(true);
         adminParaLabel.setText("Stay up-to-date with the latest activity and trends by checking the analytics section of the dashboard");
-        DropShadow shadowVBox = new DropShadow();
-        shadowVBox.setColor(Color.GRAY);
-        shadowVBox.setRadius(5);
-        shadowVBox.setOffsetX(3);
-        shadowVBox.setOffsetY(3);
-        changePassVBox.setEffect(shadowVBox);
-        adminInfoVBox.setEffect(shadowVBox);
+
+        rmUserVBoxOne.setVisible(true);
+        rmUserVBoxTwo.setVisible(false);
+        
         Color pinkColor = Color.web("#8382ff");
         DropShadow avatarShadow = new DropShadow();
         avatarShadow.setColor(pinkColor);
-        avatarShadow.setRadius(16);
+        avatarShadow.setRadius(10);
         avatarCircleMain.setEffect(avatarShadow);
         AdminNameLabel.setText("Name : "+adminName);
     }   
@@ -293,4 +312,124 @@ public class SettingsController implements Initializable {
         }
     }
 
+    private void VBoxEffectsInit() {
+        shadowVBox = new DropShadow();
+        shadowVBox.setColor(Color.GRAY);
+        shadowVBox.setRadius(5);
+        shadowVBox.setOffsetX(3);
+        shadowVBox.setOffsetY(3);
+        changePassVBox.setEffect(shadowVBox);
+        adminInfoVBox.setEffect(shadowVBox);
+        removeUsersVBox.setEffect(shadowVBox);
+
+        RotateTransition rotateIn = new RotateTransition(Duration.seconds(0.2), adminInfoVBox);
+        rotateIn.setFromAngle(0);
+        rotateIn.setToAngle(1.7);
+
+        RotateTransition rotateOut = new RotateTransition(Duration.seconds(0.2), adminInfoVBox);
+        rotateOut.setFromAngle(1.7);
+        rotateOut.setToAngle(0);
+
+        adminInfoVBox.setOnMousePressed(event -> {
+          rotateIn.play();
+        });
+
+        adminInfoVBox.setOnMouseReleased(event -> {
+          rotateOut.play();
+        });
+    }
+
+    @FXML
+    private void proceedButClicked(MouseEvent event) {
+        Color blueColor = Color.web("#182966");
+        shadowVBoxBlue = new DropShadow();
+        shadowVBoxBlue.setColor(blueColor);
+        shadowVBoxBlue.setRadius(5);
+        shadowVBoxBlue.setOffsetX(3);
+        shadowVBoxBlue.setOffsetY(3);
+        removeUsersVBox.setEffect(shadowVBoxBlue);
+        rmUserVBoxOne.setVisible(false);
+        rmUserVBoxTwo.setVisible(true);
+        rmUserCheckBox.setSelected(false);
+        userIdTextField.setText("");
+    }
+
+    @FXML
+    private void backButtonClicked(MouseEvent event) {
+        rmUserVBoxOne.setVisible(true);
+        rmUserVBoxTwo.setVisible(false);
+        removeUsersVBox.setEffect(shadowVBox);
+    }
+
+    @FXML
+    private void removeButClicked(MouseEvent event) {
+        String id = userIdTextField.getText();
+        String name="";
+        if(!rmUserCheckBox.isSelected()){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Information");
+            alert.setHeaderText("Please mark the check box after reading");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                return;
+            }
+        }
+        if(id.equals("")){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Empty!");
+            alert.setHeaderText("Please enter a User ID first");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                 return;
+            }
+        }
+        try{
+            Conn conn = new Conn();
+            ResultSet rs = conn.s.executeQuery("select name from adminlogin where userid = '"+id+"';");
+            rs.next();
+            name = rs.getString("name");
+        }catch(SQLException ex){
+            System.out.println(ex);
+        }
+        if(name.equals(adminName)){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning!");
+            alert.setHeaderText("You cannot remove your own account");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                 return;
+            }
+        }
+        if(name.equals("")){
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Warning!");
+            alert.setHeaderText("No users with entered ID");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.isPresent() && result.get() == ButtonType.OK) {
+                 return;
+            }
+        }
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Warning!");
+        alert.setHeaderText("Are you sure want to remove '"+name+"'");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try{
+                Conn conn = new Conn();
+                conn.s.executeUpdate("delete from adminlogin where userid='"+id+"';");
+                Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                alert2.setTitle("Success!");
+                alert2.setHeaderText("User successfuly removed");
+                Optional<ButtonType> result2 = alert2.showAndWait();
+                if (result2.isPresent() && result2.get() == ButtonType.OK) {
+                    rmUserVBoxOne.setVisible(true);
+                    rmUserVBoxTwo.setVisible(false);
+                    removeUsersVBox.setEffect(shadowVBox);
+                }
+            }catch(SQLException ex){
+                System.out.println(ex);
+            }
+        }else return;
+        
+    }
 }

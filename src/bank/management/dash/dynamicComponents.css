@@ -1,7 +1,7 @@
 .logoutButton{
  -fx-alignment: center;
  -fx-background-color: linear-gradient(to right,#1A3384,#2B49B3);
- 
+ -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 0);
  -fx-border: 0;
  -fx-border-radius: 8px;
  -fx-box-shadow: rgba(151, 65, 252, 0.2) 0 15px 30px -5px;
