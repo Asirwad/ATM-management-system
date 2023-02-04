@@ -6,6 +6,7 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 //import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -15,6 +16,7 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -41,6 +43,7 @@ import javafx.util.Duration;
 
 public class DashboardHomeController implements Initializable {
     boolean popupShowing = false; 
+    private volatile boolean stopThread = false;
     String adminName;
     @FXML
     private Circle avatarCircle;
@@ -68,6 +71,7 @@ public class DashboardHomeController implements Initializable {
         welcomeLabel.setText("Hello "+adminName+", welcome back!");
         incomeAndExpense();
         dateCalculator();
+        timeCalculator();
         avatarImageFetcher();
         barChartCalculator();
         addviewAllTransacAndsettingsButAnimations();
@@ -186,10 +190,10 @@ public class DashboardHomeController implements Initializable {
     }
 
     private void dateCalculator() {
-        java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat("dd-MMMM-yyyy");
+        SimpleDateFormat formatterFooter = new SimpleDateFormat("dd-MMMM-yyyy");
         java.util.Date date = new java.util.Date();
-        dateLabel.setText(formatter.format(date));
-        dateLabelFooter.setText(formatter.format(date));
+        dateLabel.setText(formatterFooter.format(date));
+        dateLabelFooter.setText(formatterFooter.format(date));
     }
 
     private void avatarImageFetcher() {
@@ -295,5 +299,22 @@ public class DashboardHomeController implements Initializable {
         settingsBut.setOnMousePressed(e -> settingsButTransition.playFromStart());
         settingsBut.setOnMouseReleased(e -> settingsButTransition.stop());
     }
-    
+
+    private void timeCalculator() {
+        Thread thread = new Thread(() ->{
+            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a dd-MMMM-yyyy");
+            while(!stopThread){
+                try{
+                    Thread.sleep(1);
+                }catch(Exception e){
+                    System.out.println(e);
+                }
+                final String timenow = sdf.format(new java.util.Date());
+                Platform.runLater(() ->{
+                    dateLabel.setText(timenow);
+                });
+            }
+        });
+        thread.start();
+    } 
 }

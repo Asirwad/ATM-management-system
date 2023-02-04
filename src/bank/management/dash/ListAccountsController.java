@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.animation.TranslateTransition;
@@ -40,6 +41,7 @@ import javafx.util.Duration;
 public class ListAccountsController implements Initializable {
     String adminName;
     boolean popupShowing;
+    private volatile boolean stopThread = false;
     @FXML
     private AnchorPane navBarAnchor;
     @FXML
@@ -72,6 +74,7 @@ public class ListAccountsController implements Initializable {
         //listIcon.setGlyphStyle("-fx-fill: #2B49B3;");
         accountsTableFetcher();
         dateSetter();
+        timeCalculator();
         avatarImageFetcher();
         nameFetcher();
     }    
@@ -272,5 +275,22 @@ public class ListAccountsController implements Initializable {
         }catch(IOException e){
             e.printStackTrace();
         }
+    }
+    private void timeCalculator() {
+        Thread thread = new Thread(() ->{
+            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a dd-MMMM-yyyy");
+            while(!stopThread){
+                try{
+                    Thread.sleep(1);
+                }catch(Exception e){
+                    System.out.println(e);
+                }
+                final String timenow = sdf.format(new java.util.Date());
+                Platform.runLater(() ->{
+                    dateLabel.setText(timenow);
+                });
+            }
+        });
+        thread.start();
     }
 }

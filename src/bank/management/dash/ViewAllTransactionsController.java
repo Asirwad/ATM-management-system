@@ -8,6 +8,7 @@ import bank.management.atm.Conn;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.animation.TranslateTransition;
@@ -45,6 +46,7 @@ import javafx.util.Duration;
  */
 public class ViewAllTransactionsController implements Initializable {
     boolean popupShowing=false;
+    private volatile boolean stopThread = false;
     String adminName;
     @FXML
     private AnchorPane navBarAnchor;
@@ -75,6 +77,7 @@ public class ViewAllTransactionsController implements Initializable {
         transacTableFetcher();
         avatarImageFetcher();
         dateSetter();
+        timeCalculator();
         nameFetcher();
     }    
 
@@ -266,5 +269,22 @@ public class ViewAllTransactionsController implements Initializable {
         }catch(IOException e){
             e.printStackTrace();
         }
+    }
+    private void timeCalculator() {
+        Thread thread = new Thread(() ->{
+            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a dd-MMMM-yyyy");
+            while(!stopThread){
+                try{
+                    Thread.sleep(1);
+                }catch(Exception e){
+                    System.out.println(e);
+                }
+                final String timenow = sdf.format(new java.util.Date());
+                Platform.runLater(() ->{
+                    dateLabel.setText(timenow);
+                });
+            }
+        });
+        thread.start();
     }
 }
