@@ -165,7 +165,7 @@
                               <Insets left="10.0" right="10.0" />
                            </HBox.margin>
                         </Separator>
-                        <VBox prefHeight="188.0" prefWidth="90.0" HBox.hgrow="ALWAYS">
+                        <VBox prefHeight="189.0" prefWidth="108.0" HBox.hgrow="ALWAYS">
                            <padding>
                               <Insets top="15.0" />
                            </padding>
@@ -199,7 +199,7 @@
                                     <Insets left="45.0" />
                                  </VBox.margin>
                               </Label>
-                              <Label text="Transferred" textFill="#a5a6ab">
+                              <Label prefHeight="18.0" prefWidth="72.0" text="Transferred" textFill="#a5a6ab">
                                  <font>
                                     <Font name="Calibri Bold" size="14.0" />
                                  </font>
