@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
+import java.util.Random;
 import javafx.application.Application;
 import javax.swing.border.LineBorder;
 
@@ -20,7 +21,10 @@ public class AdminLogin extends JFrame implements ActionListener{
         setLocationRelativeTo(null);
         
         //BACKGROUND IMAGE
-        setContentPane(new JLabel(new ImageIcon(ClassLoader.getSystemResource("icons/adminLoginBlackBackground.gif"))));
+        Random r = new Random();
+        if(r.nextInt()%2==0){
+            setContentPane(new JLabel(new ImageIcon(ClassLoader.getSystemResource("icons/adminLoginBlackBackground.gif"))));
+        }else setContentPane(new JLabel(new ImageIcon(ClassLoader.getSystemResource("icons/adminLoginBackground.gif"))));
     
         //CLOSE
         closeLabel = new JLabel("X");
