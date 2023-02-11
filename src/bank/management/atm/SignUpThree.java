@@ -11,9 +11,10 @@ public class SignUpThree extends JFrame implements ActionListener{
     JRadioButton savingsBut,fixedBut,currentBut,rdBut;
     JButton submit,cancel;
     JCheckBox atmCardCheck,internetBankCheck,mobileBankCheck,alertCheck,chequeBookCheck,eStatementCheck,declerationCheck;
-    String formno;
-    SignUpThree(String formno){
+    String formno,name;
+    SignUpThree(String formno,String name){
         this.formno = formno;
+        this.name = name;
         setSize(500,620);
         setLayout(null);
         setResizable(false);
@@ -246,9 +247,9 @@ public class SignUpThree extends JFrame implements ActionListener{
                     conn.s.executeUpdate(query1);
                     conn.s.executeUpdate(query2);
                     
-                    JOptionPane.showMessageDialog(null,"Card Number : "+cardNum+"\nPIN : "+pinNum);
+                    //JOptionPane.showMessageDialog(null,"Card Number : "+cardNum+"\nPIN : "+pinNum);
                     setVisible(false);
-                    new Deposit(pinNum,cardNum).setVisible(true);
+                    new CardConfirm(cardNum,pinNum,name).setVisible(true);
                 }
             }catch(Exception e){
                 System.out.println(e);
@@ -271,6 +272,6 @@ public class SignUpThree extends JFrame implements ActionListener{
         }
     }
     public static void main(String args[]) {
-        new SignUpThree("");
+        new SignUpThree("","");
     }
 }

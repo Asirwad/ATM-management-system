@@ -5,6 +5,7 @@
     import java.util.Random;
     import java.awt.event.*;
     import com.toedter.calendar.JDateChooser;
+import java.util.regex.Pattern;
 
     public class SignUpOne extends JFrame implements ActionListener{
         JButton next,cancel;
@@ -12,6 +13,7 @@
         JTextField nameText,fnameText,emailText,addressText,cityText,stateText,pincodeText;
         JRadioButton male,female,otherGender,married,unmarried;
         JDateChooser dateChooser;
+        String name;
         SignUpOne(){
             setSize(500,700);
             setLocation(350,10);
@@ -233,7 +235,7 @@
         public void actionPerformed(ActionEvent ae){
             if(ae.getSource() == next){
                 String formno = ""+random;
-                String name = nameText.getText();
+                name = nameText.getText();
                 String fname = fnameText.getText();
                 String dob = ((JTextField)dateChooser.getDateEditor().getUiComponent()).getText();
                 String gender = null;
@@ -263,13 +265,19 @@
                     if(name.equals("")||fname.equals("")||dob.equals("")||email.equals("")||address.equals("")||city.equals("")||state.equals("")||pin.equals("")){
                         JOptionPane.showMessageDialog(null,"All fields are Mandatory");
                     }
+                    else if(pin.length()!=6){
+                        JOptionPane.showMessageDialog(null,"Pin should be 6 digits");
+                    }
+                    else if(Pattern.matches("[a-zA-Z]+", pin)){
+                        JOptionPane.showMessageDialog(null,"Pin should contain only numbers");
+                    }
                     else{
                         Conn c = new Conn();
                         String query = "insert into signup values('"+formno+"','"+name+"','"+fname+"','"+dob+"','"+gender+"','"+email+"','"+maritialStatus+"','"+address+"','"+city+"','"+pin+"','"+state+"');";
                         c.s.executeUpdate(query);
 
                         setVisible(false);
-                        new SignUpTwo(formno).setVisible(true);
+                        new SignUpTwo(formno,name).setVisible(true);
                     }
                 }catch(Exception e){
                     System.out.println(e);

@@ -4,15 +4,17 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.SQLException;
+import java.util.regex.Pattern;
 
 public class SignUpTwo extends JFrame implements ActionListener{
-    String formno;
+    String formno,name;
     JButton next,cancel;
     JTextField panText,aadharText;
     JRadioButton syes,sno,eyes,eno;
     JComboBox religionBox,categoryBox,incomeBox,qualificationBox,ocupationBox;
-    SignUpTwo(String formno){
+    SignUpTwo(String formno,String name){
         this.formno = formno;
+        this.name = name;
         setTitle("NEW ACCOUNT APPLICATION FORM - PAGE 2");
         setSize(500,620);
         setLocation(350,10);
@@ -247,13 +249,19 @@ public class SignUpTwo extends JFrame implements ActionListener{
                 if(pan.equals("")||aadhar.equals("")){
                     JOptionPane.showMessageDialog(null,"All fields are Mandatory");
                 }
+                else if(aadhar.length()!=12){
+                    JOptionPane.showMessageDialog(null,"Pin should be 12 digits");
+                }
+                else if(Pattern.matches("[a-zA-Z]+", aadhar)){
+                        JOptionPane.showMessageDialog(null,"Pin should contain only numbers");
+                }
                 else{
                     Conn c = new Conn();
                     String query = "insert into signuptwo values('"+formno+"','"+religion+"','"+category+"','"+income+"','"+edu+"','"+ocupation+"','"+pan+"','"+aadhar+"','"+senior+"','"+exAcnt+"');";
                     c.s.executeUpdate(query);
 
                     setVisible(false);
-                    new SignUpThree(formno).setVisible(true);
+                    new SignUpThree(formno,name).setVisible(true);
 
                 }
             }catch(SQLException ex1){
@@ -275,6 +283,6 @@ public class SignUpTwo extends JFrame implements ActionListener{
         }
     }
     public static void main(String args[]) {
-       new SignUpTwo("");
+       new SignUpTwo("","");
     }
 }

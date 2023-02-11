@@ -13,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.animation.Animation;
+import javafx.animation.AnimationTimer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.animation.TranslateTransition;
@@ -70,7 +71,6 @@ public class DashboardHomeController implements Initializable {
         nameFetcher();
         welcomeLabel.setText("Hello "+adminName+", welcome back!");
         incomeAndExpense();
-        dateCalculator();
         timeCalculator();
         avatarImageFetcher();
         barChartCalculator();
@@ -187,13 +187,6 @@ public class DashboardHomeController implements Initializable {
         }catch(SQLException ex){
             //do nothing
         }
-    }
-
-    private void dateCalculator() {
-        SimpleDateFormat formatterFooter = new SimpleDateFormat("dd-MMMM-yyyy");
-        java.util.Date date = new java.util.Date();
-        dateLabel.setText(formatterFooter.format(date));
-        dateLabelFooter.setText(formatterFooter.format(date));
     }
 
     private void avatarImageFetcher() {
