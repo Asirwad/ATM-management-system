@@ -177,17 +177,6 @@ public class Login extends JFrame implements ActionListener{
         
     }
     public void closeLabelEvent(MouseEvent evt){//CLOSE OPERATION
-        /*setFocusable(false);
-        WarningFrame wf = new WarningFrame();
-        System.out.println(wf.getReturnVal());
-        wf.setVisible(true);
-        if(wf.getReturnVal()==1){
-            System.exit(0);
-        }
-        else if(wf.getReturnVal()==0){
-            wf.setVisible(false);
-            setFocusable(true);
-        }*/
         int closeLabelChoice = JOptionPane.YES_NO_OPTION;
         closeLabelChoice = JOptionPane.showConfirmDialog(null,"Are you sure want to exit?","Warning",closeLabelChoice);
         if(closeLabelChoice == JOptionPane.YES_OPTION){
@@ -205,6 +194,7 @@ public class Login extends JFrame implements ActionListener{
     public void userLoginEvent(){
         Conn conn = new Conn();
         String cardNo = cardTextField.getText();
+        cardNo = cardNo.replaceAll("\\s+", "");
         String pinNo = pinTextField.getText();
         String query = "select * from login where cardnumber = '"+cardNo+"' and pin = '"+pinNo+"'";
         try{
