@@ -19,7 +19,7 @@ public class SignUpThree extends JFrame implements ActionListener{
         setLayout(null);
         setResizable(false);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setTitle("NEW ACCOUNT APPLICATION FORM - PAGE 3");
         setContentPane(new JLabel(new ImageIcon(ClassLoader.getSystemResource("icons/signUpOneBackground.png"))));
         

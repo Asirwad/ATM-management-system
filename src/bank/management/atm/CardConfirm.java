@@ -24,7 +24,8 @@ public class CardConfirm extends JFrame implements ActionListener {
         setSize(700,400);
         setLayout(null);
         //setUndecorated(true);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setTitle("Confirmation");
         setLocationRelativeTo(null);
         

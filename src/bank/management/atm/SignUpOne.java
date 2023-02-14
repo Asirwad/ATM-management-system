@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
             setLocation(350,10);
             setResizable(false);
             //getRootPane().setBorder(BorderFactory.createMatteBorder(4, 4, 4, 4, Color.BLUE));
-            setDefaultCloseOperation(EXIT_ON_CLOSE);
+            setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
             setLayout(null);
             setContentPane(new JLabel(new ImageIcon(ClassLoader.getSystemResource("icons/signUpOneBackground.png"))));
 
