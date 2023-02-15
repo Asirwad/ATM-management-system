@@ -75,6 +75,9 @@ public class DashboardHomeController implements Initializable {
         avatarImageFetcher();
         barChartCalculator();
         addviewAllTransacAndsettingsButAnimations();
+        SimpleDateFormat sdfDateOnly = new SimpleDateFormat("dd-MMMM-yyyy");
+        final String dateNow = sdfDateOnly.format(new java.util.Date());
+        dateLabelFooter.setText(dateNow);
     }   
 
     @FXML
@@ -283,12 +286,12 @@ public class DashboardHomeController implements Initializable {
 
     private void addviewAllTransacAndsettingsButAnimations() {
         TranslateTransition viewAllTransacTransition = new TranslateTransition(Duration.millis(50), viewAllTransacBut);
-        viewAllTransacTransition.setByY(-3);
+        viewAllTransacTransition.setByY(3);
         viewAllTransacBut.setOnMousePressed(e -> viewAllTransacTransition.playFromStart());
         viewAllTransacBut.setOnMouseReleased(e -> viewAllTransacTransition.stop());
         
         TranslateTransition settingsButTransition = new TranslateTransition(Duration.millis(50), settingsBut);
-        settingsButTransition.setByY(-3);
+        settingsButTransition.setByY(3);
         settingsBut.setOnMousePressed(e -> settingsButTransition.playFromStart());
         settingsBut.setOnMouseReleased(e -> settingsButTransition.stop());
     }
