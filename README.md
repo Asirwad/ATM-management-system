@@ -1,6 +1,4 @@
-# ATM Management System
-
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+# ATM Management system 
 [![JavaFX](https://img.shields.io/badge/JavaFX-16-orange.svg)](https://openjfx.io/)
 
 ![ATM](images/atm.jpg)
@@ -50,10 +48,7 @@ Contributions to the ATM Management System project are welcome! If you would lik
 2. Create a new branch for your feature or bug fix: `git checkout -b feature/your-feature-name`.
 3. Make your changes and commit them with descriptive commit messages.
 4. Push your changes to your forked repository.
-5. Submit a pull request to the main repository.
-
-## License
-This project is licensed under the [MIT License](LICENSE).
+5. Submit a pull request to the main repo
 
 ## Contact Information
 For any questions, suggestions, or feedback, please feel free to reach out to the project maintainer at asirwadsali@gmail.com.
