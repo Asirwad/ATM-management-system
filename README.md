@@ -1,5 +1,5 @@
-# ATM Management system 
-[![JavaFX](https://img.shields.io/badge/JavaFX-16-orange.svg)](https://openjfx.io/)
+<h1 align=center> ATM-Management-system </h1>
+![JavaFX](https://img.shields.io/badge/JavaFX-16-orange.svg)](https://openjfx.io/)
 
 ![ATM](images/atm.jpg)
 
