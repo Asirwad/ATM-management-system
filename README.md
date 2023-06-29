@@ -1,9 +1,10 @@
 <h1 align=center> ATM-Management-system </h1>
 
-
 ![JavaFX](https://img.shields.io/badge/JavaFX-16-orange.svg)
 
-![ATM](src/icons/bankIcon.png)
+<p align="center">
+  <img src="src/icons/bankIcon.png" alt="Project Logo" width="100">
+</p>
 
 ## Table of Contents
 - [Project Description](#project-description)
@@ -12,7 +13,6 @@
 - [Features](#features)
 - [Dependencies](#dependencies)
 - [Contributing](#contributing)
-- [License](#license)
 - [Contact Information](#contact-information)
 
 ## Project Description
