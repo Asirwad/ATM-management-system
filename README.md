@@ -42,6 +42,14 @@ The following dependencies are required to run the ATM Management System:
 - JavaFX
 - Java Development Kit (JDK)
 
+<p align="center">
+  <img src="src/assets/readme_assets/1.png" alt="Dashboard" width="1000">
+</p>
+
+<p align="center">
+  <img src="src/assets/readme_assets/2.png" alt="Settings" width="1000">
+</p>
+
 Make sure you have these dependencies installed and properly configured before running the application.
 
 ## Contributing
