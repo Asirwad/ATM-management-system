@@ -19,10 +19,10 @@
 The ATM Management System is a software application developed in JavaFX that provides an ATM interface for users to perform various banking transactions such as depositing, withdrawing, checking balance, and changing PIN. Additionally, the application also includes an admin dashboard that allows administrators to manage, view, and control ATM transactions, as well as manage user accounts.
 
 ## Installation
-1. Clone the repository: `git clone <repository_url>`
-2. Navigate to the project directory: `cd ATM-Management-System`
-3. Compile the Java code: `javac Main.java`
-4. Run the application: `java Main`
+1. Clone the repository: `git clone https://github.com/Asirwad/ATM-management-system`
+2. Navigate to the project directory: `cd ATM-Management-System/src/bank/management/atm/`
+3. Compile the Java code: `javac Login.java`
+4. Run the application: `java Login`
 
 ## Usage
 1. Launch the ATM Management System application.
