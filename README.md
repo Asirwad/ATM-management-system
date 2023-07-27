@@ -42,13 +42,23 @@ The following dependencies are required to run the ATM Management System:
 - JavaFX
 - Java Development Kit (JDK)
 
+## Screenshots
 <p align="center">
-  <img src="src/assets/readme_assets/1.png" alt="Dashboard" width="1000">
+  <img src="https://github.com/Asirwad/ATM-management-system/assets/85600836/37ea2ba3-afde-44ab-a90e-44183699b310" alt="adminsignin" width="800">
+</p>
+<p align="center">
+  <img src="src/assets/readme_assets/1.png" alt="Dashboard" width="800">
+</p>
+<p align="center">
+  <img src="src/assets/readme_assets/2.png" alt="Settings" width="800">
+</p>
+<p align="center">
+  <img src="https://github.com/Asirwad/ATM-management-system/assets/85600836/6499a440-1444-4f49-b891-9cdfdf943730" alt="Signin" width="800">
+</p>
+<p align="center">
+  <img src="https://github.com/Asirwad/ATM-management-system/assets/85600836/89cbe493-3095-4c40-8356-3b5c12a734b9" alt="ATM" width="800">
 </p>
 
-<p align="center">
-  <img src="src/assets/readme_assets/2.png" alt="Settings" width="1000">
-</p>
 
 Make sure you have these dependencies installed and properly configured before running the application.
 
